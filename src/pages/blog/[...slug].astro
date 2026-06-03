@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SEO from '../../components/SEO.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Blog', href: '/blog' },
+  { label: post.data.title },
+];
+---
+
+<BaseLayout title={`${post.data.title} - FreeQuickUtility Blog`} description={post.data.description}>
+  <Fragment slot="head">
+    <SEO title={`${post.data.title} | FreeQuickUtility Blog`} description={post.data.description} canonical={`/blog/${post.id}`} />
+    <meta property="article:published_time" content={post.data.pubDate.toISOString()} />
+    {post.data.updatedDate && <meta property="article:modified_time" content={post.data.updatedDate.toISOString()} />}
+  </Fragment>
+
+  <article class="mx-auto max-w-3xl px-4 py-8 md:px-6 md:py-12">
+    <Breadcrumb items={breadcrumbs} />
+
+    <!-- Post header -->
+    <header class="mb-8">
+      <div class="mb-3 flex items-center gap-2">
+        <span class="rounded-full bg-[var(--color-canvas-soft-2)] px-2.5 py-0.5 text-xs font-medium text-[var(--color-body)]">
+          {post.data.category}
+        </span>
+        <span class="text-xs text-[var(--color-mute)]">
+          {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        </span>
+      </div>
+      <h1 class="text-2xl font-semibold tracking-tight text-[var(--color-ink)] md:text-3xl lg:text-4xl" style="letter-spacing: -1.28px;">
+        {post.data.title}
+      </h1>
+      <p class="mt-3 text-base text-[var(--color-body)]">{post.data.description}</p>
+      <div class="mt-4 flex flex-wrap gap-1.5">
+        {post.data.tags.map((tag: string) => (
+          <span class="rounded-md bg-[var(--color-canvas-soft)] px-2 py-0.5 text-xs text-[var(--color-mute)]">
+            #{tag}
+          </span>
+        ))}
+      </div>
+    </header>
+
+    <!-- Post content -->
+    <div class="prose prose-neutral max-w-none
+      prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-[var(--color-ink)]
+      prose-h2:mt-10 prose-h2:text-xl prose-h2:border-b prose-h2:border-[var(--color-hairline)] prose-h2:pb-2
+      prose-h3:mt-6 prose-h3:text-base
+      prose-p:text-[var(--color-body)] prose-p:leading-relaxed
+      prose-a:text-[var(--color-link)] prose-a:no-underline hover:prose-a:underline
+      prose-strong:text-[var(--color-ink)]
+      prose-li:text-[var(--color-body)]
+      prose-code:rounded prose-code:bg-[var(--color-canvas-soft-2)] prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm prose-code:text-[var(--color-ink)] prose-code:before:content-none prose-code:after:content-none
+      prose-pre:rounded-lg prose-pre:border prose-pre:border-[var(--color-hairline)] prose-pre:bg-[var(--color-primary)] prose-pre:text-[var(--color-on-primary)]
+      prose-table:text-sm prose-th:bg-[var(--color-canvas-soft-2)] prose-th:px-3 prose-th:py-2 prose-td:px-3 prose-td:py-2 prose-td:border-[var(--color-hairline)]
+      prose-blockquote:border-[var(--color-link)] prose-blockquote:text-[var(--color-body)]
+    ">
+      <Content />
+    </div>
+
+    <!-- Author -->
+    <div class="mt-12 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-5">
+      <p class="text-xs text-[var(--color-mute)]">Written by</p>
+      <p class="mt-1 text-sm font-medium text-[var(--color-ink)]">{post.data.author}</p>
+      <p class="mt-1 text-xs text-[var(--color-body)]">The FreeQuickUtility team creates practical guides to help you make the most of free online tools.</p>
+    </div>
+  </article>
+</BaseLayout>

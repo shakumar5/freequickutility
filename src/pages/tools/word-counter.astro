@@ -1,5 +1,10 @@
 ---
 import ToolLayout from '../../layouts/ToolLayout.astro';
+import FAQ from '../../components/FAQ.astro';
+import FAQSchema from '../../components/FAQSchema.astro';
+import { toolFaqs } from '../../data/toolFaqs';
+
+const faqs = toolFaqs['word-counter'];
 ---
 
 <ToolLayout
@@ -18,7 +23,6 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
       aria-label="Text input for word counting"
     ></textarea>
 
-    <!-- Stats Grid -->
     <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
       <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
         <p class="text-2xl font-semibold text-[var(--color-ink)]" id="wc-words">0</p>
@@ -50,7 +54,6 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
       </div>
     </div>
 
-    <!-- Actions -->
     <div class="mt-4 flex gap-2">
       <button id="wc-clear" class="rounded-full border border-[var(--color-hairline)] px-4 py-2 text-sm font-medium text-[var(--color-body)] transition-colors hover:bg-[var(--color-canvas-soft-2)]">
         Clear
@@ -60,6 +63,11 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
       </button>
     </div>
   </div>
+
+  <Fragment slot="faq">
+    <FAQ faqs={faqs} title="Word Counter FAQ" />
+    <FAQSchema faqs={faqs} />
+  </Fragment>
 </ToolLayout>
 
 <script>
@@ -71,11 +79,11 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
     const text = input.value;
     const trimmed = text.trim();
 
-    const words = trimmed ? trimmed.split(/\s+/).filter((w) => w.length > 0).length : 0;
+    const words = trimmed ? trimmed.split(/\s+/).filter((w: string) => w.length > 0).length : 0;
     const characters = text.length;
     const charactersNoSpaces = text.replace(/\s/g, '').length;
-    const sentences = trimmed ? trimmed.split(/[.!?]+/).filter((s) => s.trim().length > 0).length : 0;
-    const paragraphs = trimmed ? trimmed.split(/\n\s*\n/).filter((p) => p.trim().length > 0).length : 0;
+    const sentences = trimmed ? trimmed.split(/[.!?]+/).filter((s: string) => s.trim().length > 0).length : 0;
+    const paragraphs = trimmed ? trimmed.split(/\n\s*\n/).filter((p: string) => p.trim().length > 0).length : 0;
     const readingMinutes = Math.ceil(words / 200);
     const speakingMinutes = Math.ceil(words / 130);
 
@@ -98,7 +106,7 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
   copyBtn?.addEventListener('click', () => {
     const stats = `Words: ${document.getElementById('wc-words')!.textContent}\nCharacters: ${document.getElementById('wc-chars')!.textContent}\nSentences: ${document.getElementById('wc-sentences')!.textContent}\nParagraphs: ${document.getElementById('wc-paragraphs')!.textContent}`;
     navigator.clipboard.writeText(stats);
-    copyBtn.textContent = 'Copied!';
-    setTimeout(() => (copyBtn.textContent = 'Copy Stats'), 1500);
+    if (copyBtn) copyBtn.textContent = 'Copied!';
+    setTimeout(() => { if (copyBtn) copyBtn.textContent = 'Copy Stats'; }, 1500);
   });
 </script>

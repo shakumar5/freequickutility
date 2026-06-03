@@ -1,5 +1,10 @@
 ---
 import ToolLayout from '../../layouts/ToolLayout.astro';
+import FAQ from '../../components/FAQ.astro';
+import FAQSchema from '../../components/FAQSchema.astro';
+import { toolFaqs } from '../../data/toolFaqs';
+
+const faqs = toolFaqs['case-converter'];
 ---
 
 <ToolLayout
@@ -46,6 +51,10 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
       </button>
     </div>
   </div>
+  <Fragment slot="faq">
+    <FAQ faqs={faqs} title="Case Converter FAQ" />
+    <FAQSchema faqs={faqs} />
+  </Fragment>
 </ToolLayout>
 
 <script>

@@ -47,6 +47,9 @@ const relatedTools = getRelatedTools(toolId);
       <slot />
     </div>
 
+    <!-- FAQ Section -->
+    <slot name="faq" />
+
     <!-- Related Tools -->
     <RelatedTools tools={relatedTools} />
   </div>

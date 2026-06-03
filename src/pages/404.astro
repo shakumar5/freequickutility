@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found - FreeQuickUtility" description="The page you're looking for doesn't exist.">
+  <div class="mx-auto flex max-w-2xl flex-col items-center justify-center px-4 py-24 text-center md:py-40">
+    <!-- Large 404 -->
+    <p class="text-8xl font-semibold tracking-tighter text-[var(--color-hairline)] md:text-9xl" style="letter-spacing: -4px;">404</p>
+
+    <!-- Message -->
+    <h1 class="mt-6 text-2xl font-semibold tracking-tight text-[var(--color-ink)] md:text-3xl" style="letter-spacing: -1.28px;">
+      Page not found.
+    </h1>
+    <p class="mt-3 text-base text-[var(--color-body)]">
+      The page you're looking for doesn't exist or has been moved.
+    </p>
+
+    <!-- Actions -->
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a
+        href="/"
+        class="inline-flex h-10 items-center rounded-full bg-[var(--color-primary)] px-5 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
+      >
+        Go Home
+      </a>
+      <a
+        href="/#tools"
+        class="inline-flex h-10 items-center rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-5 text-sm font-medium text-[var(--color-ink)] transition-colors hover:border-[var(--color-hairline-strong)]"
+      >
+        Browse Tools
+      </a>
+    </div>
+
+    <!-- Helpful links -->
+    <div class="mt-12 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas)] p-6 text-left">
+      <p class="mb-3 text-xs font-medium uppercase tracking-wide text-[var(--color-mute)]">Popular tools</p>
+      <div class="grid grid-cols-2 gap-2">
+        <a href="/tools/word-counter" class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-link)]">📝 Word Counter</a>
+        <a href="/tools/emi-calculator" class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-link)]">🏦 EMI Calculator</a>
+        <a href="/tools/password-generator" class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-link)]">🔐 Password Generator</a>
+        <a href="/tools/age-calculator" class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-link)]">🎂 Age Calculator</a>
+        <a href="/tools/case-converter" class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-link)]">🔠 Case Converter</a>
+        <a href="/tools/qr-generator" class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-link)]">📱 QR Code Generator</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
