@@ -1,11 +1,177 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SEO from '../components/SEO.astro';
+import ToolCard from '../components/ToolCard.astro';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import FAQSchema from '../components/FAQSchema.astro';
+import { tools, getToolsByCategory, getPopularTools } from '../data/tools';
+import { categories } from '../data/categories';
+import { homeFaqs } from '../data/faqs';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout>
+  <Fragment slot="head">
+    <SEO
+      title="FreeQuickUtility - Free Online Tools | Calculators, Text Tools & Generators"
+      description="Fast, free, and private online utility tools. Word counter, age calculator, EMI calculator, password generator, QR code generator, and more. No sign-up required."
+      canonical="/"
+    />
+    <FAQSchema faqs={homeFaqs} />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden">
+    <!-- Gradient background -->
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-gradient-develop-start)]/5 via-[var(--color-gradient-preview-start)]/5 to-[var(--color-gradient-ship-end)]/5"></div>
+      <div class="animate-gradient absolute -top-1/2 left-1/2 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-r from-[var(--color-gradient-develop-start)]/10 via-[var(--color-gradient-preview-end)]/10 to-[var(--color-gradient-ship-end)]/10 blur-3xl"></div>
+    </div>
+
+    <div class="mx-auto max-w-[1400px] px-4 py-20 text-center md:px-6 md:py-32">
+      <!-- Eyebrow -->
+      <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-3 py-1.5 text-xs text-[var(--color-body)]">
+        <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+        Free, fast, and private — no sign-up needed
+      </div>
+
+      <!-- Headline -->
+      <h1 class="mx-auto max-w-3xl text-4xl font-semibold tracking-tight text-[var(--color-ink)] md:text-5xl lg:text-6xl" style="letter-spacing: -2.4px; line-height: 1;">
+        Online tools that just work.
+      </h1>
+
+      <!-- Subline -->
+      <p class="mx-auto mt-5 max-w-xl text-base text-[var(--color-body)] md:text-lg" style="line-height: 1.6;">
+        A growing collection of free utility tools for text, calculations, and generation. Everything runs in your browser — instant, private, no downloads.
+      </p>
+
+      <!-- CTA -->
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a
+          href="#tools"
+          class="inline-flex h-10 items-center rounded-full bg-[var(--color-primary)] px-5 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
+        >
+          Explore Tools
+        </a>
+        <button
+          id="hero-search"
+          class="inline-flex h-10 items-center gap-2 rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-5 text-sm font-medium text-[var(--color-ink)] transition-colors hover:border-[var(--color-hairline-strong)]"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+          </svg>
+          Search tools
+          <kbd class="ml-1 rounded bg-[var(--color-canvas-soft-2)] px-1.5 py-0.5 font-mono text-xs text-[var(--color-mute)]">⌘K</kbd>
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="mt-12 flex items-center justify-center gap-8 text-center">
+        <div>
+          <p class="text-2xl font-semibold text-[var(--color-ink)]">{tools.length}+</p>
+          <p class="text-xs text-[var(--color-mute)]">Free Tools</p>
+        </div>
+        <div class="h-8 w-px bg-[var(--color-hairline)]"></div>
+        <div>
+          <p class="text-2xl font-semibold text-[var(--color-ink)]">100%</p>
+          <p class="text-xs text-[var(--color-mute)]">Client-side</p>
+        </div>
+        <div class="h-8 w-px bg-[var(--color-hairline)]"></div>
+        <div>
+          <p class="text-2xl font-semibold text-[var(--color-ink)]">0</p>
+          <p class="text-xs text-[var(--color-mute)]">Sign-ups needed</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Tools -->
+  <section id="tools" class="mx-auto max-w-[1400px] px-4 py-16 md:px-6">
+    <div class="mb-8 text-center">
+      <p class="mb-2 font-mono text-xs uppercase tracking-wide text-[var(--color-mute)]">Most Used</p>
+      <h2 class="text-2xl font-semibold tracking-tight text-[var(--color-ink)] md:text-3xl" style="letter-spacing: -1.28px;">
+        Popular tools.
+      </h2>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {getPopularTools().map((tool) => (
+        <ToolCard
+          name={tool.name}
+          description={tool.description}
+          icon={tool.icon}
+          path={tool.path}
+          popular={tool.popular}
+          isNew={tool.isNew}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <CategoryGrid />
+
+  <!-- All Tools by Category -->
+  {categories.map((cat) => (
+    <section id={cat.id} class="mx-auto max-w-[1400px] px-4 py-12 md:px-6">
+      <div class="mb-6 flex items-center gap-3">
+        <span class="text-2xl">{cat.icon}</span>
+        <div>
+          <h2 class="text-xl font-semibold tracking-tight text-[var(--color-ink)]" style="letter-spacing: -0.6px;">
+            {cat.name}
+          </h2>
+          <p class="text-sm text-[var(--color-body)]">{cat.description}</p>
+        </div>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {getToolsByCategory(cat.id).map((tool) => (
+          <ToolCard
+            name={tool.name}
+            description={tool.description}
+            icon={tool.icon}
+            path={tool.path}
+            popular={tool.popular}
+            isNew={tool.isNew}
+          />
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <!-- How It Works -->
+  <section class="border-t border-[var(--color-hairline)] bg-[var(--color-canvas)]">
+    <div class="mx-auto max-w-[1400px] px-4 py-16 md:px-6">
+      <div class="mb-10 text-center">
+        <p class="mb-2 font-mono text-xs uppercase tracking-wide text-[var(--color-mute)]">How it works</p>
+        <h2 class="text-2xl font-semibold tracking-tight text-[var(--color-ink)] md:text-3xl" style="letter-spacing: -1.28px;">
+          Three steps. Zero friction.
+        </h2>
+      </div>
+      <div class="grid gap-8 md:grid-cols-3">
+        <div class="text-center">
+          <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-canvas-soft-2)] text-lg font-semibold text-[var(--color-ink)]">1</div>
+          <h3 class="text-sm font-medium text-[var(--color-ink)]">Find your tool</h3>
+          <p class="mt-1.5 text-sm text-[var(--color-body)]">Browse categories or use ⌘K to search instantly.</p>
+        </div>
+        <div class="text-center">
+          <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-canvas-soft-2)] text-lg font-semibold text-[var(--color-ink)]">2</div>
+          <h3 class="text-sm font-medium text-[var(--color-ink)]">Enter your data</h3>
+          <p class="mt-1.5 text-sm text-[var(--color-body)]">Paste text, enter numbers, or configure options.</p>
+        </div>
+        <div class="text-center">
+          <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-canvas-soft-2)] text-lg font-semibold text-[var(--color-ink)]">3</div>
+          <h3 class="text-sm font-medium text-[var(--color-ink)]">Get instant results</h3>
+          <p class="mt-1.5 text-sm text-[var(--color-body)]">Results appear in real-time. Copy or download.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <FAQ faqs={homeFaqs} />
+</BaseLayout>
+
+<script>
+  document.getElementById('hero-search')?.addEventListener('click', () => {
+    document.getElementById('search-trigger')?.click();
+  });
+</script>

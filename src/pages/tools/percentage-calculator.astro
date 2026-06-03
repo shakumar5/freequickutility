@@ -1,0 +1,74 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Percentage Calculator"
+  description="Calculate percentages, percentage change, increase, decrease, and what percent a number is of another."
+  toolId="percentage-calculator"
+  category="calculators"
+  categoryLabel="Calculators"
+>
+  <div class="space-y-8">
+    <!-- What is X% of Y -->
+    <div class="rounded-lg border border-[var(--color-hairline)] p-4">
+      <h3 class="mb-3 text-sm font-medium text-[var(--color-ink)]">What is X% of Y?</h3>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-sm text-[var(--color-body)]">What is</span>
+        <input type="number" id="p1-x" class="w-20 rounded-md border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-3 py-1.5 text-sm outline-none" placeholder="10" />
+        <span class="text-sm text-[var(--color-body)]">% of</span>
+        <input type="number" id="p1-y" class="w-24 rounded-md border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-3 py-1.5 text-sm outline-none" placeholder="200" />
+        <button id="p1-btn" class="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-[var(--color-on-primary)]">=</button>
+        <span id="p1-result" class="text-lg font-semibold text-[var(--color-link)]">-</span>
+      </div>
+    </div>
+
+    <!-- X is what % of Y -->
+    <div class="rounded-lg border border-[var(--color-hairline)] p-4">
+      <h3 class="mb-3 text-sm font-medium text-[var(--color-ink)]">X is what % of Y?</h3>
+      <div class="flex flex-wrap items-center gap-2">
+        <input type="number" id="p2-x" class="w-20 rounded-md border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-3 py-1.5 text-sm outline-none" placeholder="25" />
+        <span class="text-sm text-[var(--color-body)]">is what % of</span>
+        <input type="number" id="p2-y" class="w-24 rounded-md border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-3 py-1.5 text-sm outline-none" placeholder="200" />
+        <button id="p2-btn" class="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-[var(--color-on-primary)]">=</button>
+        <span id="p2-result" class="text-lg font-semibold text-[var(--color-link)]">-</span>
+      </div>
+    </div>
+
+    <!-- Percentage change -->
+    <div class="rounded-lg border border-[var(--color-hairline)] p-4">
+      <h3 class="mb-3 text-sm font-medium text-[var(--color-ink)]">Percentage Change</h3>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-sm text-[var(--color-body)]">From</span>
+        <input type="number" id="p3-from" class="w-24 rounded-md border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-3 py-1.5 text-sm outline-none" placeholder="50" />
+        <span class="text-sm text-[var(--color-body)]">to</span>
+        <input type="number" id="p3-to" class="w-24 rounded-md border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-3 py-1.5 text-sm outline-none" placeholder="75" />
+        <button id="p3-btn" class="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-[var(--color-on-primary)]">=</button>
+        <span id="p3-result" class="text-lg font-semibold text-[var(--color-link)]">-</span>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  document.getElementById('p1-btn')?.addEventListener('click', () => {
+    const x = parseFloat((document.getElementById('p1-x') as HTMLInputElement).value);
+    const y = parseFloat((document.getElementById('p1-y') as HTMLInputElement).value);
+    if (!isNaN(x) && !isNaN(y)) document.getElementById('p1-result')!.textContent = String((x / 100) * y);
+  });
+
+  document.getElementById('p2-btn')?.addEventListener('click', () => {
+    const x = parseFloat((document.getElementById('p2-x') as HTMLInputElement).value);
+    const y = parseFloat((document.getElementById('p2-y') as HTMLInputElement).value);
+    if (!isNaN(x) && !isNaN(y) && y !== 0) document.getElementById('p2-result')!.textContent = ((x / y) * 100).toFixed(2) + '%';
+  });
+
+  document.getElementById('p3-btn')?.addEventListener('click', () => {
+    const from = parseFloat((document.getElementById('p3-from') as HTMLInputElement).value);
+    const to = parseFloat((document.getElementById('p3-to') as HTMLInputElement).value);
+    if (!isNaN(from) && !isNaN(to) && from !== 0) {
+      const change = ((to - from) / Math.abs(from)) * 100;
+      document.getElementById('p3-result')!.textContent = (change > 0 ? '+' : '') + change.toFixed(2) + '%';
+    }
+  });
+</script>

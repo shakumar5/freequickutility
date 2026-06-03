@@ -1,0 +1,31 @@
+---
+import ToolCard from './ToolCard.astro';
+import type { Tool } from '../data/tools';
+
+export interface Props {
+  tools: Tool[];
+  title?: string;
+}
+
+const { tools, title = 'Related tools' } = Astro.props;
+---
+
+{tools.length > 0 && (
+  <section class="mt-12 border-t border-[var(--color-hairline)] pt-12">
+    <h2 class="mb-6 text-lg font-semibold tracking-tight text-[var(--color-ink)]" style="letter-spacing: -0.6px;">
+      {title}
+    </h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {tools.map((tool) => (
+        <ToolCard
+          name={tool.name}
+          description={tool.description}
+          icon={tool.icon}
+          path={tool.path}
+          popular={tool.popular}
+          isNew={tool.isNew}
+        />
+      ))}
+    </div>
+  </section>
+)}

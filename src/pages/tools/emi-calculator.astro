@@ -1,0 +1,95 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="EMI Calculator"
+  description="Calculate your monthly loan EMI, total interest, and total payment amount with detailed breakdown."
+  toolId="emi-calculator"
+  category="calculators"
+  categoryLabel="Calculators"
+>
+  <div>
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div>
+        <label for="emi-principal" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Loan Amount</label>
+        <input type="number" id="emi-principal" placeholder="500000" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+      <div>
+        <label for="emi-rate" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Interest Rate (% p.a.)</label>
+        <input type="number" id="emi-rate" placeholder="8.5" step="0.1" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+      <div>
+        <label for="emi-tenure" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Tenure (months)</label>
+        <input type="number" id="emi-tenure" placeholder="60" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+    </div>
+
+    <button id="emi-calc" class="mt-4 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">Calculate EMI</button>
+
+    <div id="emi-result" class="mt-6 hidden">
+      <div class="rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-6 text-center">
+        <p class="text-xs text-[var(--color-mute)]">Monthly EMI</p>
+        <p class="text-3xl font-semibold text-[var(--color-ink)]" id="emi-monthly">-</p>
+      </div>
+
+      <div class="mt-4 grid grid-cols-3 gap-3">
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-sm font-semibold text-[var(--color-ink)]" id="emi-total-principal">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Principal</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-sm font-semibold text-[var(--color-ink)]" id="emi-total-interest">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Total Interest</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-sm font-semibold text-[var(--color-ink)]" id="emi-total-payment">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Total Payment</p>
+        </div>
+      </div>
+
+      <!-- Visual bar -->
+      <div class="mt-4 flex h-4 overflow-hidden rounded-full">
+        <div id="emi-bar-principal" class="bg-[var(--color-link)]"></div>
+        <div id="emi-bar-interest" class="bg-[var(--color-warning)]"></div>
+      </div>
+      <div class="mt-2 flex justify-between text-xs text-[var(--color-mute)]">
+        <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-[var(--color-link)]"></span> Principal</span>
+        <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-[var(--color-warning)]"></span> Interest</span>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const principalInput = document.getElementById('emi-principal') as HTMLInputElement;
+  const rateInput = document.getElementById('emi-rate') as HTMLInputElement;
+  const tenureInput = document.getElementById('emi-tenure') as HTMLInputElement;
+  const calcBtn = document.getElementById('emi-calc');
+  const resultDiv = document.getElementById('emi-result');
+
+  function formatCurrency(n: number) { return '₹' + n.toLocaleString('en-IN', { maximumFractionDigits: 0 }); }
+
+  calcBtn?.addEventListener('click', () => {
+    const P = parseFloat(principalInput.value);
+    const annualRate = parseFloat(rateInput.value);
+    const N = parseInt(tenureInput.value);
+    if (isNaN(P) || isNaN(annualRate) || isNaN(N) || P <= 0 || annualRate <= 0 || N <= 0) return;
+
+    const r = annualRate / 12 / 100;
+    const emi = (P * r * Math.pow(1 + r, N)) / (Math.pow(1 + r, N) - 1);
+    const totalPayment = emi * N;
+    const totalInterest = totalPayment - P;
+
+    document.getElementById('emi-monthly')!.textContent = formatCurrency(emi);
+    document.getElementById('emi-total-principal')!.textContent = formatCurrency(P);
+    document.getElementById('emi-total-interest')!.textContent = formatCurrency(totalInterest);
+    document.getElementById('emi-total-payment')!.textContent = formatCurrency(totalPayment);
+
+    const principalPercent = (P / totalPayment) * 100;
+    (document.getElementById('emi-bar-principal') as HTMLElement).style.width = principalPercent + '%';
+    (document.getElementById('emi-bar-interest') as HTMLElement).style.width = (100 - principalPercent) + '%';
+
+    resultDiv?.classList.remove('hidden');
+  });
+</script>

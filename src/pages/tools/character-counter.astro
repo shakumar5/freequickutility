@@ -1,0 +1,89 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Character Counter"
+  description="Count characters, letters, digits, spaces, and lines in your text. Track social media character limits."
+  toolId="character-counter"
+  category="text-tools"
+  categoryLabel="Text Tools"
+>
+  <div>
+    <textarea
+      id="cc-input"
+      class="w-full resize-y rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)] placeholder:text-[var(--color-mute)]"
+      rows="6"
+      placeholder="Type or paste your text here..."
+      aria-label="Text input for character counting"
+    ></textarea>
+
+    <!-- Character limits -->
+    <div class="mt-4 flex flex-wrap gap-2">
+      <span class="rounded-full border border-[var(--color-hairline)] px-3 py-1 text-xs text-[var(--color-body)]">
+        Twitter: <span id="cc-twitter" class="font-medium">280</span> left
+      </span>
+      <span class="rounded-full border border-[var(--color-hairline)] px-3 py-1 text-xs text-[var(--color-body)]">
+        Instagram: <span id="cc-instagram" class="font-medium">2200</span> left
+      </span>
+      <span class="rounded-full border border-[var(--color-hairline)] px-3 py-1 text-xs text-[var(--color-body)]">
+        LinkedIn: <span id="cc-linkedin" class="font-medium">3000</span> left
+      </span>
+    </div>
+
+    <!-- Stats -->
+    <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="cc-total">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Total Characters</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="cc-no-spaces">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Without Spaces</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="cc-letters">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Letters</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="cc-digits">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Digits</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="cc-spaces">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Spaces</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="cc-special">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Special Chars</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="cc-lines">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Lines</p>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const input = document.getElementById('cc-input') as HTMLTextAreaElement;
+
+  function update() {
+    const text = input.value;
+    const total = text.length;
+
+    document.getElementById('cc-total')!.textContent = String(total);
+    document.getElementById('cc-no-spaces')!.textContent = String(text.replace(/\s/g, '').length);
+    document.getElementById('cc-letters')!.textContent = String((text.match(/[a-zA-Z]/g) || []).length);
+    document.getElementById('cc-digits')!.textContent = String((text.match(/\d/g) || []).length);
+    document.getElementById('cc-spaces')!.textContent = String((text.match(/\s/g) || []).length);
+    document.getElementById('cc-special')!.textContent = String((text.match(/[^a-zA-Z0-9\s]/g) || []).length);
+    document.getElementById('cc-lines')!.textContent = String(text ? text.split('\n').length : 0);
+
+    document.getElementById('cc-twitter')!.textContent = String(Math.max(0, 280 - total));
+    document.getElementById('cc-instagram')!.textContent = String(Math.max(0, 2200 - total));
+    document.getElementById('cc-linkedin')!.textContent = String(Math.max(0, 3000 - total));
+  }
+
+  input.addEventListener('input', update);
+</script>

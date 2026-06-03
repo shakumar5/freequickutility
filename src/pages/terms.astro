@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SEO from '../components/SEO.astro';
+---
+
+<BaseLayout title="Terms of Service - FreeQuickUtility" description="Terms of service for using FreeQuickUtility online tools.">
+  <Fragment slot="head">
+    <SEO title="Terms of Service - FreeQuickUtility" description="Terms and conditions for using FreeQuickUtility online tools." canonical="/terms" />
+  </Fragment>
+
+  <div class="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-20">
+    <h1 class="text-3xl font-semibold tracking-tight text-[var(--color-ink)] md:text-4xl" style="letter-spacing: -1.28px;">Terms of Service</h1>
+    <p class="mt-2 text-sm text-[var(--color-mute)]">Last updated: June 2026</p>
+
+    <div class="mt-8 space-y-6 text-sm leading-relaxed text-[var(--color-body)]">
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Acceptance of Terms</h2>
+        <p>By accessing and using FreeQuickUtility (freequickutility.com), you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.</p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Use of Services</h2>
+        <p>Our tools are provided free of charge for personal and commercial use. You may use the tools for any lawful purpose. You agree not to:</p>
+        <ul class="mt-2 list-inside list-disc space-y-1">
+          <li>Attempt to disrupt or overload our servers</li>
+          <li>Use automated systems to scrape or abuse the website</li>
+          <li>Reverse engineer or copy our tools for redistribution</li>
+          <li>Use the tools for any illegal purpose</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Disclaimer of Warranties</h2>
+        <p>Our tools are provided "as is" without warranty of any kind. While we strive for accuracy, we do not guarantee that results are error-free. Always verify results for critical use cases.</p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Limitation of Liability</h2>
+        <p>FreeQuickUtility shall not be liable for any damages arising from the use or inability to use our services, including but not limited to direct, indirect, incidental, or consequential damages.</p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Changes to Terms</h2>
+        <p>We reserve the right to modify these terms at any time. Continued use of the website after changes constitutes acceptance of updated terms.</p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Contact</h2>
+        <p>For questions about these terms, visit our <a href="/contact" class="text-[var(--color-link)] hover:underline">contact page</a>.</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

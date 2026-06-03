@@ -1,0 +1,100 @@
+---
+const toolLinks = [
+  { label: 'Word Counter', href: '/tools/word-counter' },
+  { label: 'Case Converter', href: '/tools/case-converter' },
+  { label: 'Age Calculator', href: '/tools/age-calculator' },
+  { label: 'EMI Calculator', href: '/tools/emi-calculator' },
+  { label: 'Password Generator', href: '/tools/password-generator' },
+  { label: 'QR Code Generator', href: '/tools/qr-generator' },
+];
+
+const categoryLinks = [
+  { label: 'Text Tools', href: '/#text-tools' },
+  { label: 'Calculators', href: '/#calculators' },
+  { label: 'Generators', href: '/#generators' },
+];
+
+const companyLinks = [
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Privacy Policy', href: '/privacy-policy' },
+  { label: 'Terms of Service', href: '/terms' },
+];
+---
+
+<footer class="border-t border-[var(--color-hairline)] bg-[var(--color-canvas)]">
+  <div class="mx-auto max-w-[1400px] px-4 py-16 md:px-6">
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+      <!-- Brand -->
+      <div class="col-span-2 md:col-span-1">
+        <a href="/" class="flex items-center gap-2 text-[var(--color-ink)] no-underline">
+          <span class="flex h-7 w-7 items-center justify-center rounded-md bg-[var(--color-primary)]">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M2 4L8 2L14 4L8 6L2 4Z" fill="white" />
+              <path d="M2 4V10L8 12V6L2 4Z" fill="white" opacity="0.7" />
+              <path d="M8 6V12L14 10V4L8 6Z" fill="white" opacity="0.5" />
+            </svg>
+          </span>
+          <span class="text-sm font-semibold">FreeQuickUtility</span>
+        </a>
+        <p class="mt-3 text-sm leading-relaxed text-[var(--color-body)]">
+          Fast, free, and private online tools for everyday tasks. No sign-ups, no downloads.
+        </p>
+      </div>
+
+      <!-- Popular Tools -->
+      <div>
+        <h3 class="mb-3 text-xs font-medium uppercase tracking-wide text-[var(--color-mute)]">Popular Tools</h3>
+        <ul class="space-y-2">
+          {toolLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-ink)]">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div>
+        <h3 class="mb-3 text-xs font-medium uppercase tracking-wide text-[var(--color-mute)]">Categories</h3>
+        <ul class="space-y-2">
+          {categoryLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-ink)]">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div>
+        <h3 class="mb-3 text-xs font-medium uppercase tracking-wide text-[var(--color-mute)]">Company</h3>
+        <ul class="space-y-2">
+          {companyLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-ink)]">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[var(--color-hairline)] pt-8 sm:flex-row">
+      <p class="text-xs text-[var(--color-mute)]">
+        &copy; {new Date().getFullYear()} FreeQuickUtility. All rights reserved.
+      </p>
+      <div class="flex items-center gap-4">
+        <a href="/privacy-policy" class="text-xs text-[var(--color-mute)] transition-colors hover:text-[var(--color-body)]">Privacy</a>
+        <a href="/terms" class="text-xs text-[var(--color-mute)] transition-colors hover:text-[var(--color-body)]">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>

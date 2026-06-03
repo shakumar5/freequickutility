@@ -1,0 +1,28 @@
+---
+export interface Props {
+  name: string;
+  description: string;
+  url: string;
+  category: string;
+}
+
+const { name, description, url, category } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name,
+  description,
+  url: `https://freequickutility.com${url}`,
+  applicationCategory: category,
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires JavaScript',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

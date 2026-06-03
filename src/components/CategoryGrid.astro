@@ -1,0 +1,33 @@
+---
+import { categories } from '../data/categories';
+import { getToolsByCategory } from '../data/tools';
+---
+
+<section id="categories" class="mx-auto max-w-[1400px] px-4 py-16 md:px-6">
+  <div class="mb-8 text-center">
+    <p class="mb-2 font-mono text-xs uppercase tracking-wide text-[var(--color-mute)]">Categories</p>
+    <h2 class="text-2xl font-semibold tracking-tight text-[var(--color-ink)] md:text-3xl" style="letter-spacing: -1.28px;">
+      Browse by category.
+    </h2>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {categories.map((cat) => {
+      const toolCount = getToolsByCategory(cat.id).length;
+      return (
+        <a
+          href={`/#${cat.id}`}
+          class="group relative overflow-hidden rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas)] p-6 transition-all duration-200 hover:border-[var(--color-hairline-strong)] hover:shadow-[0px_2px_2px_rgba(0,0,0,0.04),0px_8px_16px_-4px_rgba(0,0,0,0.04)]"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <span class="text-3xl">{cat.icon}</span>
+            <span class="rounded-full bg-[var(--color-canvas-soft-2)] px-2.5 py-1 text-xs font-medium text-[var(--color-body)]">
+              {toolCount} tools
+            </span>
+          </div>
+          <h3 class="text-base font-medium text-[var(--color-ink)]">{cat.name}</h3>
+          <p class="mt-1 text-sm text-[var(--color-body)]">{cat.description}</p>
+        </a>
+      );
+    })}
+  </div>
+</section>

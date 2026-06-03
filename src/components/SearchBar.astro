@@ -1,0 +1,19 @@
+---
+// SearchBar is integrated directly into the Header via the modal search
+// This component exists as a standalone inline search for category pages if needed
+---
+
+<div class="relative">
+  <div class="flex items-center gap-3 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-4 py-3 transition-colors focus-within:border-[var(--color-hairline-strong)]">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-mute)" stroke-width="2">
+      <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+    </svg>
+    <input
+      type="text"
+      id="inline-search"
+      placeholder="Filter tools..."
+      class="flex-1 bg-transparent text-sm text-[var(--color-ink)] outline-none placeholder:text-[var(--color-mute)]"
+      autocomplete="off"
+    />
+  </div>
+</div>

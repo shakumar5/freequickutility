@@ -1,0 +1,103 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Age Calculator"
+  description="Calculate exact age in years, months, and days from any date of birth. Also shows next birthday countdown."
+  toolId="age-calculator"
+  category="calculators"
+  categoryLabel="Calculators"
+>
+  <div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label for="age-dob" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Date of Birth</label>
+        <input
+          type="date"
+          id="age-dob"
+          class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]"
+        />
+      </div>
+      <div>
+        <label for="age-to" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Age as of</label>
+        <input
+          type="date"
+          id="age-to"
+          class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]"
+        />
+      </div>
+    </div>
+
+    <button id="age-calc" class="mt-4 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">
+      Calculate Age
+    </button>
+
+    <div id="age-result" class="mt-6 hidden">
+      <!-- Primary result -->
+      <div class="rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-6 text-center">
+        <p class="text-3xl font-semibold text-[var(--color-ink)]" id="age-primary"></p>
+        <p class="mt-1 text-sm text-[var(--color-mute)]">years, months, and days</p>
+      </div>
+
+      <!-- Details -->
+      <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="age-days">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Total Days</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="age-weeks">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Total Weeks</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="age-months">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Total Months</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="age-next-bday">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Next Birthday</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const dobInput = document.getElementById('age-dob') as HTMLInputElement;
+  const toInput = document.getElementById('age-to') as HTMLInputElement;
+  const calcBtn = document.getElementById('age-calc');
+  const resultDiv = document.getElementById('age-result');
+
+  // Set default "to" date
+  toInput.valueAsDate = new Date();
+
+  calcBtn?.addEventListener('click', () => {
+    if (!dobInput.value) return;
+    const birthDate = new Date(dobInput.value);
+    const toDate = toInput.value ? new Date(toInput.value) : new Date();
+
+    let years = toDate.getFullYear() - birthDate.getFullYear();
+    let months = toDate.getMonth() - birthDate.getMonth();
+    let days = toDate.getDate() - birthDate.getDate();
+
+    if (days < 0) { months--; days += new Date(toDate.getFullYear(), toDate.getMonth(), 0).getDate(); }
+    if (months < 0) { years--; months += 12; }
+
+    const totalDays = Math.floor((toDate.getTime() - birthDate.getTime()) / (1000 * 60 * 60 * 24));
+    const totalWeeks = Math.floor(totalDays / 7);
+    const totalMonths = years * 12 + months;
+
+    const nextBday = new Date(toDate.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+    if (nextBday <= toDate) nextBday.setFullYear(nextBday.getFullYear() + 1);
+    const nextBirthday = Math.ceil((nextBday.getTime() - toDate.getTime()) / (1000 * 60 * 60 * 24));
+
+    document.getElementById('age-primary')!.textContent = `${years} years, ${months} months, ${days} days`;
+    document.getElementById('age-days')!.textContent = totalDays.toLocaleString();
+    document.getElementById('age-weeks')!.textContent = totalWeeks.toLocaleString();
+    document.getElementById('age-months')!.textContent = String(totalMonths);
+    document.getElementById('age-next-bday')!.textContent = `${nextBirthday} days`;
+
+    resultDiv?.classList.remove('hidden');
+  });
+</script>

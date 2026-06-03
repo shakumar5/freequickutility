@@ -1,0 +1,75 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="SIP Calculator"
+  description="Plan systematic investments with projected returns, total value, and wealth accumulation over time."
+  toolId="sip-calculator"
+  category="calculators"
+  categoryLabel="Calculators"
+>
+  <div>
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div>
+        <label for="sip-monthly" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Monthly Investment (₹)</label>
+        <input type="number" id="sip-monthly" placeholder="5000" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+      <div>
+        <label for="sip-rate" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Expected Return (% p.a.)</label>
+        <input type="number" id="sip-rate" placeholder="12" step="0.5" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+      <div>
+        <label for="sip-years" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Time Period (years)</label>
+        <input type="number" id="sip-years" placeholder="10" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+    </div>
+
+    <button id="sip-calc" class="mt-4 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">Calculate</button>
+
+    <div id="sip-result" class="mt-6 hidden">
+      <div class="grid grid-cols-3 gap-3">
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="sip-invested">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Invested Amount</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-center">
+          <p class="text-lg font-semibold text-green-600" id="sip-returns">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Est. Returns</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-center">
+          <p class="text-lg font-semibold text-[var(--color-link)]" id="sip-total">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Total Value</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const monthlyInput = document.getElementById('sip-monthly') as HTMLInputElement;
+  const rateInput = document.getElementById('sip-rate') as HTMLInputElement;
+  const yearsInput = document.getElementById('sip-years') as HTMLInputElement;
+  const calcBtn = document.getElementById('sip-calc');
+  const resultDiv = document.getElementById('sip-result');
+
+  function formatINR(n: number) { return '₹' + n.toLocaleString('en-IN', { maximumFractionDigits: 0 }); }
+
+  calcBtn?.addEventListener('click', () => {
+    const monthly = parseFloat(monthlyInput.value);
+    const rate = parseFloat(rateInput.value);
+    const years = parseInt(yearsInput.value);
+    if (isNaN(monthly) || isNaN(rate) || isNaN(years) || monthly <= 0 || rate <= 0 || years <= 0) return;
+
+    const months = years * 12;
+    const monthlyRate = rate / 12 / 100;
+    const totalValue = monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
+    const invested = monthly * months;
+    const returns = totalValue - invested;
+
+    document.getElementById('sip-invested')!.textContent = formatINR(invested);
+    document.getElementById('sip-returns')!.textContent = formatINR(returns);
+    document.getElementById('sip-total')!.textContent = formatINR(totalValue);
+    resultDiv?.classList.remove('hidden');
+  });
+</script>

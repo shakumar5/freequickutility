@@ -1,0 +1,104 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Word Counter"
+  description="Count words, sentences, paragraphs, and estimate reading time instantly. Free online word counter tool."
+  toolId="word-counter"
+  category="text-tools"
+  categoryLabel="Text Tools"
+>
+  <div id="word-counter-app">
+    <textarea
+      id="wc-input"
+      class="w-full resize-y rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)] placeholder:text-[var(--color-mute)]"
+      rows="8"
+      placeholder="Paste or type your text here..."
+      aria-label="Text input for word counting"
+    ></textarea>
+
+    <!-- Stats Grid -->
+    <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="wc-words">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Words</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="wc-chars">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Characters</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="wc-chars-no-space">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Without Spaces</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="wc-sentences">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Sentences</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="wc-paragraphs">0</p>
+        <p class="text-xs text-[var(--color-mute)]">Paragraphs</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="wc-reading">0 min</p>
+        <p class="text-xs text-[var(--color-mute)]">Reading Time</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="wc-speaking">0 min</p>
+        <p class="text-xs text-[var(--color-mute)]">Speaking Time</p>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-4 flex gap-2">
+      <button id="wc-clear" class="rounded-full border border-[var(--color-hairline)] px-4 py-2 text-sm font-medium text-[var(--color-body)] transition-colors hover:bg-[var(--color-canvas-soft-2)]">
+        Clear
+      </button>
+      <button id="wc-copy" class="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">
+        Copy Stats
+      </button>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const input = document.getElementById('wc-input') as HTMLTextAreaElement;
+  const clearBtn = document.getElementById('wc-clear');
+  const copyBtn = document.getElementById('wc-copy');
+
+  function update() {
+    const text = input.value;
+    const trimmed = text.trim();
+
+    const words = trimmed ? trimmed.split(/\s+/).filter((w) => w.length > 0).length : 0;
+    const characters = text.length;
+    const charactersNoSpaces = text.replace(/\s/g, '').length;
+    const sentences = trimmed ? trimmed.split(/[.!?]+/).filter((s) => s.trim().length > 0).length : 0;
+    const paragraphs = trimmed ? trimmed.split(/\n\s*\n/).filter((p) => p.trim().length > 0).length : 0;
+    const readingMinutes = Math.ceil(words / 200);
+    const speakingMinutes = Math.ceil(words / 130);
+
+    document.getElementById('wc-words')!.textContent = String(words);
+    document.getElementById('wc-chars')!.textContent = String(characters);
+    document.getElementById('wc-chars-no-space')!.textContent = String(charactersNoSpaces);
+    document.getElementById('wc-sentences')!.textContent = String(sentences);
+    document.getElementById('wc-paragraphs')!.textContent = String(paragraphs);
+    document.getElementById('wc-reading')!.textContent = words === 0 ? '0 min' : readingMinutes <= 1 ? '< 1 min' : `${readingMinutes} min`;
+    document.getElementById('wc-speaking')!.textContent = words === 0 ? '0 min' : speakingMinutes <= 1 ? '< 1 min' : `${speakingMinutes} min`;
+  }
+
+  input.addEventListener('input', update);
+
+  clearBtn?.addEventListener('click', () => {
+    input.value = '';
+    update();
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const stats = `Words: ${document.getElementById('wc-words')!.textContent}\nCharacters: ${document.getElementById('wc-chars')!.textContent}\nSentences: ${document.getElementById('wc-sentences')!.textContent}\nParagraphs: ${document.getElementById('wc-paragraphs')!.textContent}`;
+    navigator.clipboard.writeText(stats);
+    copyBtn.textContent = 'Copied!';
+    setTimeout(() => (copyBtn.textContent = 'Copy Stats'), 1500);
+  });
+</script>

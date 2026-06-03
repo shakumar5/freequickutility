@@ -1,0 +1,37 @@
+---
+export interface Props {
+  name: string;
+  description: string;
+  icon: string;
+  path: string;
+  popular?: boolean;
+  isNew?: boolean;
+}
+
+const { name, description, icon, path, popular = false, isNew = false } = Astro.props;
+---
+
+<a
+  href={path}
+  class="group relative flex flex-col rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas)] p-5 transition-all duration-200 hover:border-[var(--color-hairline-strong)] hover:shadow-[0px_2px_2px_rgba(0,0,0,0.04),0px_8px_16px_-4px_rgba(0,0,0,0.04)]"
+>
+  {popular && (
+    <span class="absolute right-3 top-3 rounded-full bg-[var(--color-canvas-soft-2)] px-2 py-0.5 text-[10px] font-medium text-[var(--color-body)]">
+      Popular
+    </span>
+  )}
+  {isNew && (
+    <span class="absolute right-3 top-3 rounded-full bg-gradient-to-r from-[var(--color-gradient-develop-start)] to-[var(--color-gradient-develop-end)] px-2 py-0.5 text-[10px] font-medium text-white">
+      New
+    </span>
+  )}
+  <span class="mb-3 text-2xl">{icon}</span>
+  <h3 class="text-sm font-medium text-[var(--color-ink)] group-hover:text-[var(--color-link)]">{name}</h3>
+  <p class="mt-1.5 text-xs leading-relaxed text-[var(--color-body)]">{description}</p>
+  <span class="mt-auto flex items-center gap-1 pt-4 text-xs font-medium text-[var(--color-link)] opacity-0 transition-opacity group-hover:opacity-100">
+    Open tool
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  </span>
+</a>

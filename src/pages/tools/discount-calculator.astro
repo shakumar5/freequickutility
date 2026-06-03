@@ -1,0 +1,62 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Discount Calculator"
+  description="Calculate sale prices, savings amount, and final cost after applying discount percentage."
+  toolId="discount-calculator"
+  category="calculators"
+  categoryLabel="Calculators"
+>
+  <div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label for="dc-price" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Original Price</label>
+        <input type="number" id="dc-price" placeholder="1000" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+      <div>
+        <label for="dc-discount" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Discount (%)</label>
+        <input type="number" id="dc-discount" placeholder="20" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+    </div>
+
+    <button id="dc-calc" class="mt-4 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">Calculate</button>
+
+    <div id="dc-result" class="mt-6 hidden grid grid-cols-3 gap-3">
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-center">
+        <p class="text-2xl font-semibold text-green-600" id="dc-final">-</p>
+        <p class="text-xs text-[var(--color-mute)]">Final Price</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-center">
+        <p class="text-2xl font-semibold text-[var(--color-error)]" id="dc-savings">-</p>
+        <p class="text-xs text-[var(--color-mute)]">You Save</p>
+      </div>
+      <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-center">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="dc-percent">-</p>
+        <p class="text-xs text-[var(--color-mute)]">Discount %</p>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const priceInput = document.getElementById('dc-price') as HTMLInputElement;
+  const discountInput = document.getElementById('dc-discount') as HTMLInputElement;
+  const calcBtn = document.getElementById('dc-calc');
+  const resultDiv = document.getElementById('dc-result');
+
+  calcBtn?.addEventListener('click', () => {
+    const price = parseFloat(priceInput.value);
+    const discount = parseFloat(discountInput.value);
+    if (isNaN(price) || isNaN(discount)) return;
+
+    const savings = (price * discount) / 100;
+    const finalPrice = price - savings;
+
+    document.getElementById('dc-final')!.textContent = finalPrice.toFixed(2);
+    document.getElementById('dc-savings')!.textContent = savings.toFixed(2);
+    document.getElementById('dc-percent')!.textContent = discount + '%';
+    resultDiv?.classList.remove('hidden');
+  });
+</script>

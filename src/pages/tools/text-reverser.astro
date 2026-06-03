@@ -1,0 +1,79 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Text Reverser"
+  description="Reverse text characters, words, or lines instantly. Useful for puzzles, encoding, and text manipulation."
+  toolId="text-reverser"
+  category="text-tools"
+  categoryLabel="Text Tools"
+>
+  <div>
+    <textarea
+      id="tr-input"
+      class="w-full resize-y rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)] placeholder:text-[var(--color-mute)]"
+      rows="5"
+      placeholder="Enter text to reverse..."
+      aria-label="Text input for reversing"
+    ></textarea>
+
+    <div class="mt-4 flex flex-wrap gap-2">
+      <button data-mode="chars" class="rev-btn rounded-full border border-[var(--color-hairline)] bg-[var(--color-primary)] px-4 py-2 text-xs font-medium text-[var(--color-on-primary)]">Reverse Characters</button>
+      <button data-mode="words" class="rev-btn rounded-full border border-[var(--color-hairline)] px-4 py-2 text-xs font-medium text-[var(--color-body)] transition-colors hover:bg-[var(--color-canvas-soft-2)]">Reverse Words</button>
+      <button data-mode="lines" class="rev-btn rounded-full border border-[var(--color-hairline)] px-4 py-2 text-xs font-medium text-[var(--color-body)] transition-colors hover:bg-[var(--color-canvas-soft-2)]">Reverse Lines</button>
+    </div>
+
+    <div class="mt-6">
+      <label class="mb-2 block text-xs font-medium text-[var(--color-mute)]">Result</label>
+      <textarea
+        id="tr-output"
+        class="w-full resize-y rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-sm text-[var(--color-ink)] outline-none"
+        rows="5"
+        readonly
+        aria-label="Reversed text output"
+      ></textarea>
+      <button id="tr-copy" class="mt-3 rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">
+        Copy Result
+      </button>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const input = document.getElementById('tr-input') as HTMLTextAreaElement;
+  const output = document.getElementById('tr-output') as HTMLTextAreaElement;
+  const buttons = document.querySelectorAll('.rev-btn');
+  const copyBtn = document.getElementById('tr-copy');
+  let currentMode = 'chars';
+
+  function reverse() {
+    const text = input.value;
+    switch (currentMode) {
+      case 'chars': output.value = text.split('').reverse().join(''); break;
+      case 'words': output.value = text.split(/(\s+)/).reverse().join(''); break;
+      case 'lines': output.value = text.split('\n').reverse().join('\n'); break;
+    }
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      currentMode = (btn as HTMLElement).dataset.mode || 'chars';
+      buttons.forEach((b) => {
+        b.classList.remove('bg-[var(--color-primary)]', 'text-[var(--color-on-primary)]');
+        b.classList.add('text-[var(--color-body)]');
+      });
+      btn.classList.add('bg-[var(--color-primary)]', 'text-[var(--color-on-primary)]');
+      btn.classList.remove('text-[var(--color-body)]');
+      reverse();
+    });
+  });
+
+  input.addEventListener('input', reverse);
+
+  copyBtn?.addEventListener('click', () => {
+    navigator.clipboard.writeText(output.value);
+    copyBtn.textContent = 'Copied!';
+    setTimeout(() => (copyBtn.textContent = 'Copy Result'), 1500);
+  });
+</script>

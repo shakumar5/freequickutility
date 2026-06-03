@@ -1,0 +1,84 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="BMI Calculator"
+  description="Calculate your Body Mass Index with health category classification and risk assessment."
+  toolId="bmi-calculator"
+  category="calculators"
+  categoryLabel="Calculators"
+>
+  <div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label for="bmi-weight" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Weight (kg)</label>
+        <input type="number" id="bmi-weight" placeholder="70" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+      <div>
+        <label for="bmi-height" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Height (cm)</label>
+        <input type="number" id="bmi-height" placeholder="175" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+    </div>
+
+    <button id="bmi-calc" class="mt-4 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">Calculate BMI</button>
+
+    <div id="bmi-result" class="mt-6 hidden">
+      <div class="rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-6 text-center">
+        <p class="text-4xl font-semibold" id="bmi-value">-</p>
+        <p class="mt-1 text-sm font-medium" id="bmi-category">-</p>
+        <p class="mt-2 text-xs text-[var(--color-mute)]" id="bmi-risk">-</p>
+      </div>
+
+      <!-- BMI Scale -->
+      <div class="mt-4 rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4">
+        <div class="flex h-3 overflow-hidden rounded-full">
+          <div class="flex-1 bg-blue-400"></div>
+          <div class="flex-1 bg-green-400"></div>
+          <div class="flex-1 bg-yellow-400"></div>
+          <div class="flex-1 bg-orange-400"></div>
+          <div class="flex-1 bg-red-500"></div>
+        </div>
+        <div class="mt-2 flex justify-between text-[10px] text-[var(--color-mute)]">
+          <span>Underweight</span>
+          <span>Normal</span>
+          <span>Overweight</span>
+          <span>Obese</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const weightInput = document.getElementById('bmi-weight') as HTMLInputElement;
+  const heightInput = document.getElementById('bmi-height') as HTMLInputElement;
+  const calcBtn = document.getElementById('bmi-calc');
+  const resultDiv = document.getElementById('bmi-result');
+
+  calcBtn?.addEventListener('click', () => {
+    const weight = parseFloat(weightInput.value);
+    const height = parseFloat(heightInput.value);
+    if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) return;
+
+    const heightM = height / 100;
+    const bmi = weight / (heightM * heightM);
+    const rounded = Math.round(bmi * 10) / 10;
+
+    let category: string, risk: string, color: string;
+    if (bmi < 18.5) { category = 'Underweight'; risk = 'Possible nutritional deficiency'; color = '#0070f3'; }
+    else if (bmi < 25) { category = 'Normal weight'; risk = 'Low health risk'; color = '#0cce6b'; }
+    else if (bmi < 30) { category = 'Overweight'; risk = 'Moderate risk of cardiovascular disease'; color = '#f5a623'; }
+    else if (bmi < 35) { category = 'Obese (Class I)'; risk = 'High risk'; color = '#ff6b35'; }
+    else { category = 'Obese (Class II+)'; risk = 'Very high risk'; color = '#ee0000'; }
+
+    const valueEl = document.getElementById('bmi-value')!;
+    const categoryEl = document.getElementById('bmi-category')!;
+    valueEl.textContent = String(rounded);
+    valueEl.style.color = color;
+    categoryEl.textContent = category;
+    categoryEl.style.color = color;
+    document.getElementById('bmi-risk')!.textContent = risk;
+    resultDiv?.classList.remove('hidden');
+  });
+</script>

@@ -1,0 +1,71 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="CAGR Calculator"
+  description="Calculate Compound Annual Growth Rate to measure investment performance over time."
+  toolId="cagr-calculator"
+  category="calculators"
+  categoryLabel="Calculators"
+>
+  <div>
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div>
+        <label for="cagr-begin" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Beginning Value</label>
+        <input type="number" id="cagr-begin" placeholder="10000" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+      <div>
+        <label for="cagr-end" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Ending Value</label>
+        <input type="number" id="cagr-end" placeholder="25000" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+      <div>
+        <label for="cagr-years" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Number of Years</label>
+        <input type="number" id="cagr-years" placeholder="5" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+    </div>
+
+    <button id="cagr-calc" class="mt-4 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">Calculate CAGR</button>
+
+    <div id="cagr-result" class="mt-6 hidden">
+      <div class="rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-6 text-center">
+        <p class="text-xs text-[var(--color-mute)]">CAGR</p>
+        <p class="text-4xl font-semibold text-[var(--color-link)]" id="cagr-value">-</p>
+      </div>
+      <div class="mt-4 grid grid-cols-2 gap-3">
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="cagr-absolute">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Absolute Return</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="cagr-abs-percent">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Absolute Return %</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const beginInput = document.getElementById('cagr-begin') as HTMLInputElement;
+  const endInput = document.getElementById('cagr-end') as HTMLInputElement;
+  const yearsInput = document.getElementById('cagr-years') as HTMLInputElement;
+  const calcBtn = document.getElementById('cagr-calc');
+  const resultDiv = document.getElementById('cagr-result');
+
+  calcBtn?.addEventListener('click', () => {
+    const begin = parseFloat(beginInput.value);
+    const end = parseFloat(endInput.value);
+    const years = parseFloat(yearsInput.value);
+    if (isNaN(begin) || isNaN(end) || isNaN(years) || begin <= 0 || end <= 0 || years <= 0) return;
+
+    const cagr = (Math.pow(end / begin, 1 / years) - 1) * 100;
+    const absoluteReturn = end - begin;
+    const absolutePercent = ((end - begin) / begin) * 100;
+
+    document.getElementById('cagr-value')!.textContent = cagr.toFixed(2) + '%';
+    document.getElementById('cagr-absolute')!.textContent = absoluteReturn.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+    document.getElementById('cagr-abs-percent')!.textContent = absolutePercent.toFixed(2) + '%';
+    resultDiv?.classList.remove('hidden');
+  });
+</script>

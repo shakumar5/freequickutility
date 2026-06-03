@@ -1,0 +1,102 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="QR Code Generator"
+  description="Create QR codes for URLs, text, WiFi, and contact information. Download as PNG instantly."
+  toolId="qr-generator"
+  category="generators"
+  categoryLabel="Generators"
+>
+  <div>
+    <div>
+      <label for="qr-input" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Enter URL or text</label>
+      <input
+        type="text"
+        id="qr-input"
+        placeholder="https://example.com"
+        class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]"
+      />
+    </div>
+
+    <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div>
+        <label for="qr-size" class="mb-1 block text-xs text-[var(--color-mute)]">Size</label>
+        <select id="qr-size" class="w-full rounded-md border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-3 py-1.5 text-sm">
+          <option value="200">200×200</option>
+          <option value="300" selected>300×300</option>
+          <option value="400">400×400</option>
+          <option value="500">500×500</option>
+        </select>
+      </div>
+      <div>
+        <label for="qr-fg" class="mb-1 block text-xs text-[var(--color-mute)]">Foreground</label>
+        <input type="color" id="qr-fg" value="#171717" class="h-9 w-full rounded-md border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-1" />
+      </div>
+      <div>
+        <label for="qr-bg" class="mb-1 block text-xs text-[var(--color-mute)]">Background</label>
+        <input type="color" id="qr-bg" value="#ffffff" class="h-9 w-full rounded-md border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-1" />
+      </div>
+    </div>
+
+    <button id="qr-generate" class="mt-4 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">
+      Generate QR Code
+    </button>
+
+    <div id="qr-result" class="mt-6 hidden text-center">
+      <div class="inline-block rounded-xl border border-[var(--color-hairline)] bg-white p-4">
+        <canvas id="qr-canvas"></canvas>
+      </div>
+      <div class="mt-4">
+        <button id="qr-download" class="rounded-full border border-[var(--color-hairline)] px-4 py-2 text-sm font-medium text-[var(--color-body)] transition-colors hover:bg-[var(--color-canvas-soft-2)]">
+          Download PNG
+        </button>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  import QRCode from 'qrcode';
+
+  const inputEl = document.getElementById('qr-input') as HTMLInputElement;
+  const sizeEl = document.getElementById('qr-size') as HTMLSelectElement;
+  const fgEl = document.getElementById('qr-fg') as HTMLInputElement;
+  const bgEl = document.getElementById('qr-bg') as HTMLInputElement;
+  const generateBtn = document.getElementById('qr-generate');
+  const resultDiv = document.getElementById('qr-result');
+  const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement;
+  const downloadBtn = document.getElementById('qr-download');
+
+  generateBtn?.addEventListener('click', async () => {
+    const text = inputEl.value.trim();
+    if (!text) {
+      inputEl.focus();
+      return;
+    }
+
+    const size = parseInt(sizeEl.value);
+
+    try {
+      await QRCode.toCanvas(canvas, text, {
+        width: size,
+        margin: 2,
+        color: {
+          dark: fgEl.value,
+          light: bgEl.value,
+        },
+      });
+      resultDiv?.classList.remove('hidden');
+    } catch (err) {
+      console.error('QR generation failed:', err);
+    }
+  });
+
+  downloadBtn?.addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = 'qrcode.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+</script>

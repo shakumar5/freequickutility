@@ -1,0 +1,80 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Date Difference Calculator"
+  description="Find the exact difference between two dates in years, months, days, weeks, hours, and minutes."
+  toolId="date-difference-calculator"
+  category="calculators"
+  categoryLabel="Calculators"
+>
+  <div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label for="dd-start" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">Start Date</label>
+        <input type="date" id="dd-start" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+      <div>
+        <label for="dd-end" class="mb-1.5 block text-xs font-medium text-[var(--color-body)]">End Date</label>
+        <input type="date" id="dd-end" class="w-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-4 py-2.5 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]" />
+      </div>
+    </div>
+
+    <button id="dd-calc" class="mt-4 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">Calculate Difference</button>
+
+    <div id="dd-result" class="mt-6 hidden">
+      <div class="rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-6 text-center">
+        <p class="text-2xl font-semibold text-[var(--color-ink)]" id="dd-primary"></p>
+      </div>
+      <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="dd-days">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Total Days</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="dd-weeks">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Total Weeks</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="dd-hours">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Total Hours</p>
+        </div>
+        <div class="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-3 text-center">
+          <p class="text-lg font-semibold text-[var(--color-ink)]" id="dd-minutes">-</p>
+          <p class="text-xs text-[var(--color-mute)]">Total Minutes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const startInput = document.getElementById('dd-start') as HTMLInputElement;
+  const endInput = document.getElementById('dd-end') as HTMLInputElement;
+  const calcBtn = document.getElementById('dd-calc');
+  const resultDiv = document.getElementById('dd-result');
+
+  calcBtn?.addEventListener('click', () => {
+    if (!startInput.value || !endInput.value) return;
+    let start = new Date(startInput.value);
+    let end = new Date(endInput.value);
+    if (start > end) [start, end] = [end, start];
+
+    let years = end.getFullYear() - start.getFullYear();
+    let months = end.getMonth() - start.getMonth();
+    let days = end.getDate() - start.getDate();
+    if (days < 0) { months--; days += new Date(end.getFullYear(), end.getMonth(), 0).getDate(); }
+    if (months < 0) { years--; months += 12; }
+
+    const totalMs = end.getTime() - start.getTime();
+    const totalDays = Math.floor(totalMs / (1000 * 60 * 60 * 24));
+
+    document.getElementById('dd-primary')!.textContent = `${years} years, ${months} months, ${days} days`;
+    document.getElementById('dd-days')!.textContent = totalDays.toLocaleString();
+    document.getElementById('dd-weeks')!.textContent = Math.floor(totalDays / 7).toLocaleString();
+    document.getElementById('dd-hours')!.textContent = (totalDays * 24).toLocaleString();
+    document.getElementById('dd-minutes')!.textContent = (totalDays * 24 * 60).toLocaleString();
+    resultDiv?.classList.remove('hidden');
+  });
+</script>

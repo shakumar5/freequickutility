@@ -1,0 +1,88 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Remove Duplicate Lines"
+  description="Remove repeated lines from text while preserving the original order. Clean up lists instantly."
+  toolId="remove-duplicate-lines"
+  category="text-tools"
+  categoryLabel="Text Tools"
+>
+  <div>
+    <textarea
+      id="rdl-input"
+      class="w-full resize-y rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)] placeholder:text-[var(--color-mute)]"
+      rows="8"
+      placeholder="Paste your text with duplicate lines..."
+      aria-label="Text input for duplicate removal"
+    ></textarea>
+
+    <div class="mt-4 flex items-center gap-4">
+      <label class="flex items-center gap-2 text-sm text-[var(--color-body)]">
+        <input type="checkbox" id="rdl-case" class="rounded" />
+        Case sensitive
+      </label>
+      <label class="flex items-center gap-2 text-sm text-[var(--color-body)]">
+        <input type="checkbox" id="rdl-trim" checked class="rounded" />
+        Trim whitespace
+      </label>
+    </div>
+
+    <button id="rdl-btn" class="mt-4 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">
+      Remove Duplicates
+    </button>
+
+    <div class="mt-6">
+      <div class="mb-2 flex items-center justify-between">
+        <label class="text-xs font-medium text-[var(--color-mute)]">Result</label>
+        <span id="rdl-stats" class="text-xs text-[var(--color-mute)]"></span>
+      </div>
+      <textarea
+        id="rdl-output"
+        class="w-full resize-y rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 text-sm text-[var(--color-ink)] outline-none"
+        rows="8"
+        readonly
+        aria-label="Text output without duplicates"
+      ></textarea>
+      <button id="rdl-copy" class="mt-3 rounded-full border border-[var(--color-hairline)] px-4 py-2 text-sm font-medium text-[var(--color-body)] transition-colors hover:bg-[var(--color-canvas-soft-2)]">
+        Copy Result
+      </button>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const input = document.getElementById('rdl-input') as HTMLTextAreaElement;
+  const output = document.getElementById('rdl-output') as HTMLTextAreaElement;
+  const caseSensitive = document.getElementById('rdl-case') as HTMLInputElement;
+  const trimWhitespace = document.getElementById('rdl-trim') as HTMLInputElement;
+  const btn = document.getElementById('rdl-btn');
+  const stats = document.getElementById('rdl-stats');
+  const copyBtn = document.getElementById('rdl-copy');
+
+  btn?.addEventListener('click', () => {
+    const lines = input.value.split('\n');
+    const seen = new Set<string>();
+    const unique: string[] = [];
+
+    for (const line of lines) {
+      let key = trimWhitespace.checked ? line.trim() : line;
+      if (!caseSensitive.checked) key = key.toLowerCase();
+      if (!seen.has(key)) {
+        seen.add(key);
+        unique.push(trimWhitespace.checked ? line.trim() : line);
+      }
+    }
+
+    output.value = unique.join('\n');
+    const removed = lines.length - unique.length;
+    if (stats) stats.textContent = `${removed} duplicate${removed !== 1 ? 's' : ''} removed`;
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    navigator.clipboard.writeText(output.value);
+    copyBtn.textContent = 'Copied!';
+    setTimeout(() => (copyBtn.textContent = 'Copy Result'), 1500);
+  });
+</script>

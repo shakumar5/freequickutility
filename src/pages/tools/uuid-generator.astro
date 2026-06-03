@@ -1,0 +1,88 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="UUID Generator"
+  description="Generate unique UUIDs (v4) for applications, databases, APIs, and software development."
+  toolId="uuid-generator"
+  category="generators"
+  categoryLabel="Generators"
+>
+  <div>
+    <div class="flex items-center gap-3">
+      <label for="uuid-count" class="text-sm text-[var(--color-body)]">Generate</label>
+      <input type="number" id="uuid-count" value="5" min="1" max="100" class="w-20 rounded-md border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] px-3 py-1.5 text-sm text-[var(--color-ink)] outline-none" />
+      <label class="text-sm text-[var(--color-body)]">UUIDs</label>
+      <button id="uuid-gen" class="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90">Generate</button>
+    </div>
+
+    <div class="mt-4 flex items-center gap-3">
+      <label class="flex items-center gap-2 text-sm text-[var(--color-body)]">
+        <input type="checkbox" id="uuid-uppercase" class="rounded" /> Uppercase
+      </label>
+      <label class="flex items-center gap-2 text-sm text-[var(--color-body)]">
+        <input type="checkbox" id="uuid-hyphens" checked class="rounded" /> Include hyphens
+      </label>
+    </div>
+
+    <div class="mt-6">
+      <div class="mb-2 flex items-center justify-between">
+        <label class="text-xs font-medium text-[var(--color-mute)]">Generated UUIDs</label>
+        <button id="uuid-copy-all" class="text-xs font-medium text-[var(--color-link)] transition-colors hover:text-[var(--color-link-deep)]">Copy All</button>
+      </div>
+      <div id="uuid-output" class="max-h-80 overflow-y-auto rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] p-4 font-mono text-sm text-[var(--color-ink)]">
+        <p class="text-[var(--color-mute)]">Click Generate to create UUIDs...</p>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const countInput = document.getElementById('uuid-count') as HTMLInputElement;
+  const genBtn = document.getElementById('uuid-gen');
+  const output = document.getElementById('uuid-output')!;
+  const copyAllBtn = document.getElementById('uuid-copy-all');
+  const uppercaseCheck = document.getElementById('uuid-uppercase') as HTMLInputElement;
+  const hyphensCheck = document.getElementById('uuid-hyphens') as HTMLInputElement;
+
+  function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0;
+      const v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+
+  genBtn?.addEventListener('click', () => {
+    const count = Math.min(100, Math.max(1, parseInt(countInput.value) || 5));
+    const uuids: string[] = [];
+
+    for (let i = 0; i < count; i++) {
+      let uuid = generateUUID();
+      if (uppercaseCheck.checked) uuid = uuid.toUpperCase();
+      if (!hyphensCheck.checked) uuid = uuid.replace(/-/g, '');
+      uuids.push(uuid);
+    }
+
+    output.innerHTML = uuids
+      .map((uuid) => `<div class="flex items-center justify-between py-1 border-b border-[var(--color-hairline)] last:border-0"><span>${uuid}</span><button class="uuid-copy-single shrink-0 ml-2 text-xs text-[var(--color-link)] hover:text-[var(--color-link-deep)]" data-uuid="${uuid}">Copy</button></div>`)
+      .join('');
+
+    document.querySelectorAll('.uuid-copy-single').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        navigator.clipboard.writeText((btn as HTMLElement).dataset.uuid || '');
+        btn.textContent = '✓';
+        setTimeout(() => (btn.textContent = 'Copy'), 1000);
+      });
+    });
+  });
+
+  copyAllBtn?.addEventListener('click', () => {
+    const text = output.querySelectorAll('span');
+    const uuids = Array.from(text).map((el) => el.textContent).join('\n');
+    navigator.clipboard.writeText(uuids);
+    copyAllBtn.textContent = 'Copied!';
+    setTimeout(() => (copyAllBtn.textContent = 'Copy All'), 1500);
+  });
+</script>

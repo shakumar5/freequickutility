@@ -1,0 +1,22 @@
+---
+export interface Props {
+  slot?: string;
+  format?: 'auto' | 'rectangle' | 'horizontal' | 'vertical';
+}
+
+const { slot = '', format = 'auto' } = Astro.props;
+---
+
+<!-- AdSense placeholder - replace data-ad-client and data-ad-slot with your values -->
+{slot && (
+  <div class="my-4 flex items-center justify-center">
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+      data-ad-slot={slot}
+      data-ad-format={format}
+      data-full-width-responsive="true"
+    ></ins>
+  </div>
+)}

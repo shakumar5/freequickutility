@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SEO from '../components/SEO.astro';
+---
+
+<BaseLayout title="About - FreeQuickUtility" description="Learn about FreeQuickUtility - fast, free, and private online utility tools for everyone.">
+  <Fragment slot="head">
+    <SEO title="About Us - FreeQuickUtility" description="FreeQuickUtility provides fast, free, and private online tools for everyday tasks. No sign-ups, no downloads, just tools that work." canonical="/about" />
+  </Fragment>
+
+  <div class="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-20">
+    <h1 class="text-3xl font-semibold tracking-tight text-[var(--color-ink)] md:text-4xl" style="letter-spacing: -1.28px;">About FreeQuickUtility.</h1>
+    
+    <div class="mt-8 space-y-6 text-base leading-relaxed text-[var(--color-body)]">
+      <p>
+        FreeQuickUtility exists to make digital tasks effortless. We provide a curated collection of online tools that are fast, free, and private — designed to solve everyday problems without the friction of downloads, sign-ups, or complicated interfaces.
+      </p>
+
+      <h2 class="text-xl font-semibold text-[var(--color-ink)]" style="letter-spacing: -0.6px;">Our principles</h2>
+      
+      <div class="grid gap-4 sm:grid-cols-3">
+        <div class="rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas)] p-5">
+          <p class="mb-2 text-2xl">⚡</p>
+          <h3 class="text-sm font-medium text-[var(--color-ink)]">Speed first</h3>
+          <p class="mt-1 text-sm text-[var(--color-body)]">Every tool loads instantly. Static generation means zero server wait time.</p>
+        </div>
+        <div class="rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas)] p-5">
+          <p class="mb-2 text-2xl">🔒</p>
+          <h3 class="text-sm font-medium text-[var(--color-ink)]">Privacy by design</h3>
+          <p class="mt-1 text-sm text-[var(--color-body)]">All processing happens in your browser. No data leaves your device.</p>
+        </div>
+        <div class="rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas)] p-5">
+          <p class="mb-2 text-2xl">🎯</p>
+          <h3 class="text-sm font-medium text-[var(--color-ink)]">Zero friction</h3>
+          <p class="mt-1 text-sm text-[var(--color-body)]">No accounts, no paywalls, no ads blocking your workflow.</p>
+        </div>
+      </div>
+
+      <h2 class="text-xl font-semibold text-[var(--color-ink)]" style="letter-spacing: -0.6px;">Who is this for?</h2>
+      <p>
+        Whether you're a student checking word count for an essay, a developer generating UUIDs, a professional calculating EMI for a loan, or anyone who needs a quick calculation — our tools are built with you in mind.
+      </p>
+
+      <h2 class="text-xl font-semibold text-[var(--color-ink)]" style="letter-spacing: -0.6px;">Technology</h2>
+      <p>
+        Built with Astro for blazing-fast static generation, Tailwind CSS for a polished design, and vanilla JavaScript for tool interactions. Every tool runs entirely client-side — your data never touches our servers.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

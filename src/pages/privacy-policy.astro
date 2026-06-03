@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SEO from '../components/SEO.astro';
+---
+
+<BaseLayout title="Privacy Policy - FreeQuickUtility" description="Our privacy policy explains how FreeQuickUtility handles your data.">
+  <Fragment slot="head">
+    <SEO title="Privacy Policy - FreeQuickUtility" description="Learn how FreeQuickUtility protects your privacy. All tools run client-side with no data collection." canonical="/privacy-policy" />
+  </Fragment>
+
+  <div class="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-20">
+    <h1 class="text-3xl font-semibold tracking-tight text-[var(--color-ink)] md:text-4xl" style="letter-spacing: -1.28px;">Privacy Policy</h1>
+    <p class="mt-2 text-sm text-[var(--color-mute)]">Last updated: June 2026</p>
+
+    <div class="mt-8 space-y-6 text-sm leading-relaxed text-[var(--color-body)]">
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Overview</h2>
+        <p>FreeQuickUtility ("we", "our", "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website at freequickutility.com.</p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Data Processing</h2>
+        <p>All tools on FreeQuickUtility process data entirely within your web browser using client-side JavaScript. No text, numbers, or other data you enter into our tools is transmitted to our servers or any third-party services.</p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Information We Collect</h2>
+        <p>We may collect basic analytics data such as:</p>
+        <ul class="mt-2 list-inside list-disc space-y-1">
+          <li>Page views and navigation patterns</li>
+          <li>Browser type and device information</li>
+          <li>Referring website</li>
+          <li>Geographic region (country level)</li>
+        </ul>
+        <p class="mt-2">We do NOT collect personal information, account data, or tool input data.</p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Cookies</h2>
+        <p>We may use essential cookies to improve your experience and analytics cookies to understand site usage. You can control cookie preferences through your browser settings.</p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Third-Party Services</h2>
+        <p>We may use third-party services such as Google Analytics for website analytics and Google AdSense for advertising. These services may collect information through cookies according to their own privacy policies.</p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 text-lg font-semibold text-[var(--color-ink)]">Contact</h2>
+        <p>If you have questions about this Privacy Policy, please contact us at <a href="/contact" class="text-[var(--color-link)] hover:underline">our contact page</a>.</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
