@@ -14,7 +14,7 @@ export const tools: Tool[] = [
   {
     id: 'word-counter',
     name: 'Word Counter',
-    description: 'Count words, sentences, paragraphs, and estimate reading time instantly.',
+    description: 'Free online word counter tool - count words, sentences, paragraphs, characters and estimate reading time instantly. Perfect for essays, articles, social media, and content creation.',
     category: 'text-tools',
     path: '/tools/word-counter',
     icon: '📝',
@@ -23,7 +23,7 @@ export const tools: Tool[] = [
   {
     id: 'character-counter',
     name: 'Character Counter',
-    description: 'Count characters with and without spaces, track limits for social media posts.',
+    description: 'Free character counter tool for social media - count characters with/without spaces. Track limits for Twitter/X (280 chars), LinkedIn, Instagram, SMS, and more. Real-time counter.',
     category: 'text-tools',
     path: '/tools/character-counter',
     icon: '🔤',
@@ -31,7 +31,7 @@ export const tools: Tool[] = [
   {
     id: 'case-converter',
     name: 'Case Converter',
-    description: 'Convert text between uppercase, lowercase, title case, sentence case, and more.',
+    description: 'Free text case converter - convert text to uppercase, lowercase, title case, sentence case, camelCase, and snake_case. Perfect for programming and content editing.',
     category: 'text-tools',
     path: '/tools/case-converter',
     icon: '🔠',
@@ -40,7 +40,7 @@ export const tools: Tool[] = [
   {
     id: 'text-reverser',
     name: 'Text Reverser',
-    description: 'Reverse text, words, or sentences instantly. Great for puzzles and encoding.',
+    description: 'Free online text reverser tool - reverse text, words, or sentences instantly. Great for palindromes, puzzles, coding, and creating encrypted messages.',
     category: 'text-tools',
     path: '/tools/text-reverser',
     icon: '🔄',
@@ -48,7 +48,7 @@ export const tools: Tool[] = [
   {
     id: 'remove-duplicate-lines',
     name: 'Remove Duplicate Lines',
-    description: 'Clean up lists by removing repeated lines while preserving order.',
+    description: 'Free duplicate line remover - clean up lists and text by removing repeated lines while preserving order. Perfect for data cleanup and list management.',
     category: 'text-tools',
     path: '/tools/remove-duplicate-lines',
     icon: '🧹',
@@ -58,7 +58,7 @@ export const tools: Tool[] = [
   {
     id: 'age-calculator',
     name: 'Age Calculator',
-    description: 'Calculate exact age in years, months, and days from any date of birth.',
+    description: 'Free online age calculator - calculate exact age in years, months, and days from any date of birth. Get precise age calculation with breakdown by days lived.',
     category: 'calculators',
     path: '/tools/age-calculator',
     icon: '🎂',
@@ -67,7 +67,7 @@ export const tools: Tool[] = [
   {
     id: 'date-difference-calculator',
     name: 'Date Difference Calculator',
-    description: 'Find the exact difference between two dates in days, weeks, months, and years.',
+    description: 'Free date difference calculator - find the exact difference between two dates in days, weeks, months, and years. Perfect for countdown and duration calculations.',
     category: 'calculators',
     path: '/tools/date-difference-calculator',
     icon: '📅',
@@ -75,7 +75,7 @@ export const tools: Tool[] = [
   {
     id: 'percentage-calculator',
     name: 'Percentage Calculator',
-    description: 'Calculate percentages, percentage change, and percentage of a number.',
+    description: 'Free percentage calculator - calculate percentages, percentage change, discount percentages, and percentage of a number. Essential for math, finance, and sales.',
     category: 'calculators',
     path: '/tools/percentage-calculator',
     icon: '📊',
@@ -84,7 +84,7 @@ export const tools: Tool[] = [
   {
     id: 'bmi-calculator',
     name: 'BMI Calculator',
-    description: 'Calculate Body Mass Index with health category classification and recommendations.',
+    description: 'Free BMI calculator - calculate Body Mass Index with health category classification (underweight, normal, overweight, obese) and health risk assessment. Health tool.',
     category: 'calculators',
     path: '/tools/bmi-calculator',
     icon: '⚖️',
@@ -92,7 +92,7 @@ export const tools: Tool[] = [
   {
     id: 'emi-calculator',
     name: 'EMI Calculator',
-    description: 'Calculate monthly loan payments with detailed amortization breakdown.',
+    description: 'Free EMI calculator - calculate monthly loan payments with detailed amortization schedule. Calculate EMI for home loans, car loans, personal loans instantly.',
     category: 'calculators',
     path: '/tools/emi-calculator',
     icon: '🏦',
@@ -101,7 +101,7 @@ export const tools: Tool[] = [
   {
     id: 'discount-calculator',
     name: 'Discount Calculator',
-    description: 'Calculate sale prices, savings amount, and final cost after discount.',
+    description: 'Free discount calculator - calculate sale prices, savings amount, final cost, and percentage off. Perfect for shopping, pricing, and sales calculations.',
     category: 'calculators',
     path: '/tools/discount-calculator',
     icon: '🏷️',
@@ -109,7 +109,7 @@ export const tools: Tool[] = [
   {
     id: 'sip-calculator',
     name: 'SIP Calculator',
-    description: 'Plan systematic investments with projected returns and wealth accumulation.',
+    description: 'Free SIP calculator - plan systematic investment plans with projected returns, wealth accumulation, and investment growth forecast. Financial planning tool.',
     category: 'calculators',
     path: '/tools/sip-calculator',
     icon: '📈',
@@ -118,7 +118,7 @@ export const tools: Tool[] = [
   {
     id: 'cagr-calculator',
     name: 'CAGR Calculator',
-    description: 'Calculate Compound Annual Growth Rate for investment performance analysis.',
+    description: 'Free CAGR calculator - calculate Compound Annual Growth Rate for investment analysis and performance measurement. Essential financial metrics calculator.',
     category: 'calculators',
     path: '/tools/cagr-calculator',
     icon: '💹',
@@ -129,7 +129,7 @@ export const tools: Tool[] = [
   {
     id: 'password-generator',
     name: 'Password Generator',
-    description: 'Generate strong, secure passwords with customizable length and character sets.',
+    description: 'Free strong password generator - generate secure, random passwords with customizable length and character sets (uppercase, lowercase, numbers, symbols).',
     category: 'generators',
     path: '/tools/password-generator',
     icon: '🔐',
@@ -138,7 +138,7 @@ export const tools: Tool[] = [
   {
     id: 'uuid-generator',
     name: 'UUID Generator',
-    description: 'Generate unique UUIDs (v4) for applications, databases, and development.',
+    description: 'Free UUID generator - generate unique UUIDs (v4) for applications, databases, development projects, and software. Random unique identifier generator.',
     category: 'generators',
     path: '/tools/uuid-generator',
     icon: '🆔',
@@ -146,7 +146,7 @@ export const tools: Tool[] = [
   {
     id: 'qr-generator',
     name: 'QR Code Generator',
-    description: 'Create QR codes for URLs, text, WiFi, and contact info. Download as PNG instantly.',
+    description: 'Free QR code generator - create QR codes for URLs, text, WiFi networks, vCards, and contact info. Download as PNG or SVG instantly. No sign-up required.',
     category: 'generators',
     path: '/tools/qr-generator',
     icon: '📱',
