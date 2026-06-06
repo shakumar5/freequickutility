@@ -1,0 +1,27 @@
+---
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'FreeQuickUtility',
+  url: 'https://freequickutility.com',
+  description: 'Fast, free, and private online utility tools — calculators, text tools, and generators.',
+  publisher: {
+    '@type': 'Organization',
+    name: 'FreeQuickUtility',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://freequickutility.com/favicon.svg',
+    },
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: 'https://freequickutility.com/?q={search_term_string}',
+    },
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

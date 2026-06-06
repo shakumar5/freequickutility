@@ -26,6 +26,6 @@ export const homeFaqs: FAQ[] = [
   },
   {
     question: 'How is FreeQuickUtility different from other tool websites?',
-    answer: 'We focus on speed, privacy, and design quality. Our tools are built with modern technology (Astro + static generation) for instant loading, process everything client-side for privacy, and feature a clean, professional interface without clutter or intrusive ads.',
+    answer: 'We focus on speed, privacy, and design quality. Our tools are built with modern technology (Astro + static generation) for instant loading, process everything client-side for privacy, and feature a clean, professional interface designed for everyday use.',
   },
 ];

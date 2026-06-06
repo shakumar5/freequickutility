@@ -1,0 +1,49 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  url: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  author?: string;
+  image?: string;
+}
+
+const {
+  title,
+  description,
+  url,
+  pubDate,
+  updatedDate,
+  author = 'FreeQuickUtility Team',
+  image = 'https://freequickutility.com/images/og-default.png',
+} = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  image,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  author: {
+    '@type': 'Organization',
+    name: author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'FreeQuickUtility',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://freequickutility.com/favicon.svg',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `https://freequickutility.com${url}`,
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

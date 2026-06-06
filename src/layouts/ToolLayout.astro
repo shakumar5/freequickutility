@@ -4,6 +4,7 @@ import SEO from '../components/SEO.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import WebApplicationSchema from '../components/WebApplicationSchema.astro';
 import RelatedTools from '../components/RelatedTools.astro';
+import Adsense from '../components/Adsense.astro';
 import { getRelatedTools } from '../data/tools';
 import type { BreadcrumbItem } from '../components/Breadcrumb.astro';
 
@@ -49,6 +50,8 @@ const relatedTools = getRelatedTools(toolId);
 
     <!-- FAQ Section -->
     <slot name="faq" />
+
+    <Adsense slotKey="toolFooter" />
 
     <!-- Related Tools -->
     <RelatedTools tools={relatedTools} />

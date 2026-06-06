@@ -146,7 +146,7 @@ export const tools: Tool[] = [
   {
     id: 'qr-generator',
     name: 'QR Code Generator',
-    description: 'Create QR codes for URLs, text, WiFi, and contact info. Download as PNG or SVG.',
+    description: 'Create QR codes for URLs, text, WiFi, and contact info. Download as PNG instantly.',
     category: 'generators',
     path: '/tools/qr-generator',
     icon: '📱',

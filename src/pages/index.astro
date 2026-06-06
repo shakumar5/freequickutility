@@ -5,6 +5,9 @@ import ToolCard from '../components/ToolCard.astro';
 import CategoryGrid from '../components/CategoryGrid.astro';
 import FAQ from '../components/FAQ.astro';
 import FAQSchema from '../components/FAQSchema.astro';
+import WebSiteSchema from '../components/WebSiteSchema.astro';
+import ToolsListSchema from '../components/ToolsListSchema.astro';
+import Adsense from '../components/Adsense.astro';
 import { tools, getToolsByCategory, getPopularTools } from '../data/tools';
 import { categories } from '../data/categories';
 import { homeFaqs } from '../data/faqs';
@@ -18,6 +21,8 @@ import { homeFaqs } from '../data/faqs';
       canonical="/"
     />
     <FAQSchema faqs={homeFaqs} />
+    <WebSiteSchema />
+    <ToolsListSchema />
   </Fragment>
 
   <!-- Hero Section -->
@@ -136,6 +141,10 @@ import { homeFaqs } from '../data/faqs';
       </div>
     </section>
   ))}
+
+  <div class="mx-auto max-w-[1400px] px-4 md:px-6">
+    <Adsense slotKey="homeMid" />
+  </div>
 
   <!-- How It Works -->
   <section class="border-t border-[var(--color-hairline)] bg-[var(--color-canvas)]">

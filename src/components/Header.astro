@@ -1,4 +1,6 @@
 ---
+import { searchTools } from '../data/searchTools';
+
 const navLinks = [
   { label: 'Tools', href: '/#tools' },
   { label: 'Categories', href: '/#categories' },
@@ -100,7 +102,7 @@ const navLinks = [
   </div>
 </div>
 
-<script>
+<script define:vars={{ searchTools }}>
   // Mobile menu toggle
   const mobileToggle = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -143,32 +145,13 @@ const navLinks = [
   });
 
   // Search functionality
-  const toolsData = [
-    { name: 'Word Counter', path: '/tools/word-counter', icon: '📝', category: 'Text Tools' },
-    { name: 'Character Counter', path: '/tools/character-counter', icon: '🔤', category: 'Text Tools' },
-    { name: 'Case Converter', path: '/tools/case-converter', icon: '🔠', category: 'Text Tools' },
-    { name: 'Text Reverser', path: '/tools/text-reverser', icon: '🔄', category: 'Text Tools' },
-    { name: 'Remove Duplicate Lines', path: '/tools/remove-duplicate-lines', icon: '🧹', category: 'Text Tools' },
-    { name: 'Age Calculator', path: '/tools/age-calculator', icon: '🎂', category: 'Calculators' },
-    { name: 'Date Difference Calculator', path: '/tools/date-difference-calculator', icon: '📅', category: 'Calculators' },
-    { name: 'Percentage Calculator', path: '/tools/percentage-calculator', icon: '📊', category: 'Calculators' },
-    { name: 'BMI Calculator', path: '/tools/bmi-calculator', icon: '⚖️', category: 'Calculators' },
-    { name: 'EMI Calculator', path: '/tools/emi-calculator', icon: '🏦', category: 'Calculators' },
-    { name: 'Discount Calculator', path: '/tools/discount-calculator', icon: '🏷️', category: 'Calculators' },
-    { name: 'SIP Calculator', path: '/tools/sip-calculator', icon: '📈', category: 'Calculators' },
-    { name: 'CAGR Calculator', path: '/tools/cagr-calculator', icon: '💹', category: 'Calculators' },
-    { name: 'Password Generator', path: '/tools/password-generator', icon: '🔐', category: 'Generators' },
-    { name: 'UUID Generator', path: '/tools/uuid-generator', icon: '🆔', category: 'Generators' },
-    { name: 'QR Code Generator', path: '/tools/qr-generator', icon: '📱', category: 'Generators' },
-  ];
-
   searchInput?.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase().trim();
     if (!query) {
       if (searchResults) searchResults.innerHTML = '<p class="px-3 py-6 text-center text-sm text-[var(--color-mute)]">Type to search tools...</p>';
       return;
     }
-    const filtered = toolsData.filter(
+    const filtered = searchTools.filter(
       (t) => t.name.toLowerCase().includes(query) || t.category.toLowerCase().includes(query)
     );
     if (filtered.length === 0) {

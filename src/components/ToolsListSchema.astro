@@ -1,0 +1,20 @@
+---
+import { tools } from '../data/tools';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Free Online Utility Tools',
+  description: 'Free calculators, text tools, and generators by FreeQuickUtility.',
+  numberOfItems: tools.length,
+  itemListElement: tools.map((tool, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: tool.name,
+    url: `https://freequickutility.com${tool.path}`,
+    description: tool.description,
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
