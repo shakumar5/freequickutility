@@ -1,9 +1,9 @@
 User-agent: *
-Allow: /
+Allow: /sitemap-index.xml
+Allow: /sitemap-0.xml
 Disallow: /admin/
 Disallow: /private/
 Disallow: /*.json$
-Disallow: /*.xml$
 Crawl-delay: 0
 
 # Block AI training bots
