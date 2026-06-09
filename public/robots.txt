@@ -1,25 +1,4 @@
 User-agent: *
-Allow: /sitemap-index.xml
-Allow: /sitemap-0.xml
-Disallow: /admin/
-Disallow: /private/
-Disallow: /*.json$
-Crawl-delay: 0
-
-# Block AI training bots
-User-agent: GPTBot
-Disallow: /
-
-User-agent: CCBot
-Disallow: /
-
-User-agent: anthropic-ai
-Disallow: /
-
-User-agent: Claude-Web
-Disallow: /
-
-User-agent: Perplexity
-Disallow: /
+Allow: /
 
 Sitemap: https://freequickutility.com/sitemap-index.xml
