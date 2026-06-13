@@ -6,6 +6,7 @@ import WebApplicationSchema from '../components/WebApplicationSchema.astro';
 import RelatedTools from '../components/RelatedTools.astro';
 import Adsense from '../components/Adsense.astro';
 import { getRelatedTools } from '../data/tools';
+import { toolDescriptions } from '../data/toolDescriptions';
 import type { BreadcrumbItem } from '../components/Breadcrumb.astro';
 
 export interface Props {
@@ -20,14 +21,15 @@ const { title, description, toolId, category, categoryLabel } = Astro.props;
 
 const breadcrumbs: BreadcrumbItem[] = [
   { label: 'Home', href: '/' },
-  { label: categoryLabel, href: `/#${category}` },
+  { label: categoryLabel, href: `/tools/${category}` },
   { label: title },
 ];
 
 const relatedTools = getRelatedTools(toolId);
+const toolDesc = toolDescriptions[toolId];
 ---
 
-<BaseLayout title={`${title} - FreeQuickUtility`} description={description}>
+<BaseLayout title={`${title} - Free Online Tool | FreeQuickUtility`} description={description}>
   <Fragment slot="head">
     <SEO title={`${title} - Free Online Tool | FreeQuickUtility`} description={description} canonical={`/tools/${toolId}`} />
     <WebApplicationSchema name={title} description={description} url={`/tools/${toolId}`} category="Utility" />
@@ -52,6 +54,32 @@ const relatedTools = getRelatedTools(toolId);
     <slot name="faq" />
 
     <Adsense slotKey="toolFooter" />
+
+    <!-- Detailed Description Section for SEO -->
+    {toolDesc && (
+      <section class="mt-12 border-t border-[var(--color-hairline)] pt-10">
+        <h2 class="text-xl font-semibold tracking-tight text-[var(--color-ink)] md:text-2xl" style="letter-spacing: -0.6px;">
+          {toolDesc.title}
+        </h2>
+        <p class="mt-4 text-base leading-relaxed text-[var(--color-body)]">
+          {toolDesc.content}
+        </p>
+
+        <h3 class="mt-8 text-lg font-medium text-[var(--color-ink)]">How to Use This Tool</h3>
+        <ol class="mt-3 list-inside list-decimal space-y-2 text-sm leading-relaxed text-[var(--color-body)]">
+          {toolDesc.howToUse.map((step) => (
+            <li>{step}</li>
+          ))}
+        </ol>
+
+        <h3 class="mt-8 text-lg font-medium text-[var(--color-ink)]">Key Features</h3>
+        <ul class="mt-3 list-inside list-disc space-y-2 text-sm leading-relaxed text-[var(--color-body)]">
+          {toolDesc.features.map((feature) => (
+            <li>{feature}</li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     <!-- Related Tools -->
     <RelatedTools tools={relatedTools} />

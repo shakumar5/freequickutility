@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SEO from '../../components/SEO.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ToolCard from '../../components/ToolCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import FAQSchema from '../../components/FAQSchema.astro';
+import { getToolsByCategory } from '../../data/tools';
+
+const tools = getToolsByCategory('calculators');
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Calculators' },
+];
+
+const faqs = [
+  {
+    question: 'Are all calculators on FreeQuickUtility free to use?',
+    answer: 'Yes, every calculator is 100% free with no hidden charges, no premium tiers, and no usage limits. You can use them as many times as you want without creating an account.',
+  },
+  {
+    question: 'Are the calculations accurate?',
+    answer: 'Yes. Our calculators use standard mathematical formulas used by banks, financial institutions, and healthcare professionals. EMI uses the reducing balance method, BMI uses the WHO standard formula, and all results are calculated to high precision.',
+  },
+  {
+    question: 'Is my data stored when I use a calculator?',
+    answer: 'No. All calculations happen entirely in your browser using JavaScript. No data is sent to any server, stored in any database, or shared with third parties. Your financial and health data stays completely private.',
+  },
+  {
+    question: 'Do the calculators work on mobile devices?',
+    answer: 'Absolutely. All calculators are fully responsive and work seamlessly on smartphones, tablets, and desktops. The interface adapts to your screen size for the best experience.',
+  },
+  {
+    question: 'Can I use these calculators for financial planning?',
+    answer: 'Our calculators provide accurate estimates based on standard formulas. They are excellent for planning and comparison purposes. For official financial decisions, we recommend consulting a certified financial advisor.',
+  },
+];
+---
+
+<BaseLayout title="Free Online Calculators - EMI, Age, BMI, SIP & More | FreeQuickUtility" description="Free online calculators for finance, health, and everyday math. Calculate EMI, age, BMI, SIP returns, CAGR, percentages, discounts, and date differences instantly.">
+  <Fragment slot="head">
+    <SEO
+      title="Free Online Calculators - EMI, Age, BMI, SIP & More | FreeQuickUtility"
+      description="Free online calculators for finance, health, and everyday math. Calculate EMI, age, BMI, SIP returns, CAGR, percentages, discounts, and date differences instantly. No sign-up required."
+      canonical="/tools/calculators"
+    />
+    <FAQSchema faqs={faqs} />
+  </Fragment>
+
+  <div class="mx-auto max-w-5xl px-4 py-12 md:px-6 md:py-20">
+    <Breadcrumb items={breadcrumbs} />
+
+    <div class="mb-10">
+      <h1 class="text-3xl font-semibold tracking-tight text-[var(--color-ink)] md:text-4xl" style="letter-spacing: -1.28px;">
+        Free Online Calculators
+      </h1>
+      <p class="mt-3 max-w-2xl text-base leading-relaxed text-[var(--color-body)]">
+        Accurate, instant, and private calculators for financial planning, health assessment, and everyday math. From EMI and SIP calculations to age and BMI — all tools run in your browser with no sign-up needed.
+      </p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {tools.map((tool) => (
+        <ToolCard
+          name={tool.name}
+          description={tool.description}
+          icon={tool.icon}
+          path={tool.path}
+          popular={tool.popular}
+          isNew={tool.isNew}
+        />
+      ))}
+    </div>
+
+    <!-- SEO Content Section -->
+    <section class="mt-16 border-t border-[var(--color-hairline)] pt-10">
+      <h2 class="text-xl font-semibold tracking-tight text-[var(--color-ink)]">About Our Free Online Calculators</h2>
+      <p class="mt-4 text-sm leading-relaxed text-[var(--color-body)]">
+        FreeQuickUtility offers a comprehensive suite of calculators designed for everyday use. Whether you need to plan a loan, check your BMI, calculate investment returns, or find the percentage discount on a product, our tools provide instant and accurate results. Every calculation happens in your browser — no data is sent to servers, ensuring complete privacy for sensitive financial and health information.
+      </p>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--color-body)]">
+        Our financial calculators (EMI, SIP, CAGR, Discount) use industry-standard formulas trusted by banks and financial institutions. The health calculator (BMI) uses the World Health Organization standard classification. All tools are mobile-friendly, require no downloads or sign-ups, and provide results in real time.
+      </p>
+    </section>
+
+    <FAQ faqs={faqs} title="Calculator FAQ" />
+  </div>
+</BaseLayout>

@@ -7,7 +7,9 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://freequickutility.com',
   compressHTML: true,
-  integrations: [sitemap()],
+  integrations: [sitemap({
+    filter: (page) => !page.includes('/search'),
+  })],
   vite: {
     plugins: [tailwindcss()],
   },

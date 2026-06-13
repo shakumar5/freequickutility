@@ -1,7 +1,7 @@
 {
   "name": "FreeQuickUtility - Free Online Tools",
   "short_name": "FreeQuickUtility",
-  "description": "Fast, free, and private online utility tools.",
+  "description": "Fast, free, and private online utility tools — calculators, text tools, and generators.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fafafa",
@@ -11,6 +11,17 @@
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/images/og-default.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

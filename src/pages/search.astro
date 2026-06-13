@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SEO from '../components/SEO.astro';
+import { tools } from '../data/tools';
+---
+
+<BaseLayout title="Search Tools - FreeQuickUtility" description="Search through all free online tools on FreeQuickUtility. Find calculators, text tools, generators and more.">
+  <Fragment slot="head">
+    <SEO
+      title="Search Tools - FreeQuickUtility"
+      description="Search through all free online tools on FreeQuickUtility. Find calculators, text tools, generators and more."
+      canonical="/search"
+      noindex={true}
+    />
+  </Fragment>
+
+  <div class="mx-auto max-w-5xl px-4 py-12 md:px-6 md:py-20">
+    <h1 class="text-3xl font-semibold tracking-tight text-[var(--color-ink)] md:text-4xl" style="letter-spacing: -1.28px;">
+      Search Tools
+    </h1>
+
+    <!-- Search Form -->
+    <form id="search-form" class="mt-6">
+      <div class="flex gap-3">
+        <input
+          type="text"
+          id="search-query"
+          placeholder="Search for tools..."
+          class="flex-1 rounded-lg border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-4 py-3 text-sm text-[var(--color-ink)] outline-none transition-colors focus:border-[var(--color-hairline-strong)]"
+          autocomplete="off"
+        />
+        <button
+          type="submit"
+          class="rounded-lg bg-[var(--color-primary)] px-5 py-3 text-sm font-medium text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Info -->
+    <p id="results-info" class="mt-6 mb-4 text-sm text-[var(--color-body)] hidden"></p>
+
+    <!-- Results Grid -->
+    <div id="results-grid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {tools.map((tool) => (
+        <a
+          href={tool.path}
+          class="tool-card group rounded-xl border border-[var(--color-hairline)] bg-[var(--color-canvas)] p-5 transition-all duration-200 hover:border-[var(--color-hairline-strong)] hover:shadow-[0px_2px_2px_rgba(0,0,0,0.04),0px_8px_16px_-4px_rgba(0,0,0,0.04)]"
+          data-name={tool.name.toLowerCase()}
+          data-description={tool.description.toLowerCase()}
+          data-category={tool.category.toLowerCase()}
+        >
+          <div class="mb-3 flex items-center gap-3">
+            <span class="text-2xl">{tool.icon}</span>
+            <h3 class="text-sm font-medium text-[var(--color-ink)] group-hover:text-[var(--color-link)]">{tool.name}</h3>
+          </div>
+          <p class="text-xs leading-relaxed text-[var(--color-body)]">{tool.description}</p>
+        </a>
+      ))}
+    </div>
+
+    <!-- No results -->
+    <div id="no-results" class="hidden py-12 text-center">
+      <p class="text-lg text-[var(--color-mute)]">No tools found</p>
+      <p class="mt-2 text-sm text-[var(--color-body)]">Try a different search term or <a href="/" class="text-[var(--color-link)] hover:underline">browse all tools</a>.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('search-query') as HTMLInputElement;
+  const searchForm = document.getElementById('search-form');
+  const resultsInfo = document.getElementById('results-info');
+  const resultsGrid = document.getElementById('results-grid');
+  const noResults = document.getElementById('no-results');
+  const toolCards = document.querySelectorAll('.tool-card');
+
+  function filterTools(query: string) {
+    const q = query.toLowerCase().trim();
+    let visibleCount = 0;
+
+    toolCards.forEach((card) => {
+      const el = card as HTMLElement;
+      const name = el.dataset.name || '';
+      const description = el.dataset.description || '';
+      const category = el.dataset.category || '';
+
+      if (!q || name.includes(q) || description.includes(q) || category.includes(q)) {
+        el.style.display = '';
+        visibleCount++;
+      } else {
+        el.style.display = 'none';
+      }
+    });
+
+    if (q) {
+      resultsInfo!.textContent = `${visibleCount} ${visibleCount === 1 ? 'result' : 'results'} for "${query}"`;
+      resultsInfo!.classList.remove('hidden');
+    } else {
+      resultsInfo!.classList.add('hidden');
+    }
+
+    if (visibleCount === 0 && q) {
+      noResults!.classList.remove('hidden');
+      resultsGrid!.classList.add('hidden');
+    } else {
+      noResults!.classList.add('hidden');
+      resultsGrid!.classList.remove('hidden');
+    }
+  }
+
+  // Handle URL query param on page load
+  const params = new URLSearchParams(window.location.search);
+  const initialQuery = params.get('q') || '';
+  if (initialQuery) {
+    searchInput.value = initialQuery;
+    filterTools(initialQuery);
+  }
+
+  searchInput?.addEventListener('input', () => filterTools(searchInput.value));
+  searchForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    filterTools(searchInput.value);
+  });
+</script>

@@ -15,3 +15,6 @@ https://freequickutility.pages.dev/*
 
 /favicon.ico
   Cache-Control: public, max-age=86400
+
+/images/*
+  Cache-Control: public, max-age=604800

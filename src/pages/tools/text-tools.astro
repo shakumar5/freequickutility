@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SEO from '../../components/SEO.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ToolCard from '../../components/ToolCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import FAQSchema from '../../components/FAQSchema.astro';
+import { getToolsByCategory } from '../../data/tools';
+
+const tools = getToolsByCategory('text-tools');
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Text Tools' },
+];
+
+const faqs = [
+  {
+    question: 'Are these text tools completely free?',
+    answer: 'Yes, all text tools are 100% free with no limits, no sign-ups, and no premium features locked behind a paywall. Use them as often as you need.',
+  },
+  {
+    question: 'Is my text data stored or sent anywhere?',
+    answer: 'No. All text processing happens entirely in your browser using JavaScript. Your text never leaves your device, is never stored on any server, and is never shared with third parties.',
+  },
+  {
+    question: 'Do these tools work with non-English text?',
+    answer: 'Yes. Our text tools work with any language that uses standard Unicode characters. Word counting works best with languages that use spaces between words (English, Spanish, French, German, etc.).',
+  },
+  {
+    question: 'Is there a text length limit?',
+    answer: 'No hard limit. All processing runs in your browser, so the only limitation is your device memory. Most tools handle documents of any practical length without issues.',
+  },
+  {
+    question: 'Can I use these tools for academic and professional work?',
+    answer: 'Absolutely. Students use our word counter for essays, writers use the case converter for formatting, and developers use tools like the text reverser for debugging. All tools provide accurate, reliable results.',
+  },
+];
+---
+
+<BaseLayout title="Free Online Text Tools - Word Counter, Case Converter & More | FreeQuickUtility" description="Free online text tools for writing, editing, and formatting. Count words, convert case, reverse text, remove duplicates, and count characters instantly.">
+  <Fragment slot="head">
+    <SEO
+      title="Free Online Text Tools - Word Counter, Case Converter & More | FreeQuickUtility"
+      description="Free online text tools for writing, editing, and formatting. Count words, convert text case, reverse text, remove duplicate lines, and count characters instantly. No sign-up required."
+      canonical="/tools/text-tools"
+    />
+    <FAQSchema faqs={faqs} />
+  </Fragment>
+
+  <div class="mx-auto max-w-5xl px-4 py-12 md:px-6 md:py-20">
+    <Breadcrumb items={breadcrumbs} />
+
+    <div class="mb-10">
+      <h1 class="text-3xl font-semibold tracking-tight text-[var(--color-ink)] md:text-4xl" style="letter-spacing: -1.28px;">
+        Free Online Text Tools
+      </h1>
+      <p class="mt-3 max-w-2xl text-base leading-relaxed text-[var(--color-body)]">
+        Analyze, transform, and format text instantly with our free online text tools. Count words and characters, convert text case, reverse text, and remove duplicate lines — all in your browser with complete privacy.
+      </p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {tools.map((tool) => (
+        <ToolCard
+          name={tool.name}
+          description={tool.description}
+          icon={tool.icon}
+          path={tool.path}
+          popular={tool.popular}
+          isNew={tool.isNew}
+        />
+      ))}
+    </div>
+
+    <!-- SEO Content Section -->
+    <section class="mt-16 border-t border-[var(--color-hairline)] pt-10">
+      <h2 class="text-xl font-semibold tracking-tight text-[var(--color-ink)]">About Our Free Text Tools</h2>
+      <p class="mt-4 text-sm leading-relaxed text-[var(--color-body)]">
+        FreeQuickUtility provides a collection of essential text manipulation tools for writers, students, developers, and content creators. Whether you need to count words for an essay, format variable names for code, check character limits for social media posts, or clean up duplicate data, our tools deliver instant, accurate results.
+      </p>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--color-body)]">
+        Every tool processes text entirely in your browser — no server uploads, no data collection, and no privacy concerns. This makes them safe to use with sensitive content like unpublished manuscripts, proprietary code, or personal notes.
+      </p>
+    </section>
+
+    <FAQ faqs={faqs} title="Text Tools FAQ" />
+  </div>
+</BaseLayout>

@@ -114,3 +114,8 @@ Research shows that posts between 71–100 characters get the highest engagement
 ## Count Your Characters Before Posting
 
 Writing a tweet and not sure if it fits? Use our [free Character Counter](/tools/character-counter) — it shows your exact character count and how many characters you have left for Twitter, Instagram, and LinkedIn in real-time. Our [Word Counter](/tools/word-counter) is also helpful for longer content planning.
+
+## Related Articles
+
+- [How to Create a Strong Password You Can Actually Remember](/blog/how-to-create-strong-password-you-can-remember) — Keep your social accounts secure
+- [BMI Chart for Men & Women: Healthy Ranges](/blog/bmi-chart-for-men-women-by-age) — Health tools and guides

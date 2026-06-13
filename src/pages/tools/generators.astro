@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SEO from '../../components/SEO.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ToolCard from '../../components/ToolCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import FAQSchema from '../../components/FAQSchema.astro';
+import { getToolsByCategory } from '../../data/tools';
+
+const tools = getToolsByCategory('generators');
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Generators' },
+];
+
+const faqs = [
+  {
+    question: 'Are the generators secure and random?',
+    answer: 'Yes. Our password generator and UUID generator use the Web Crypto API (crypto.getRandomValues) which provides cryptographically secure random number generation. This is the same level of randomness used by security applications.',
+  },
+  {
+    question: 'Are generated passwords or UUIDs stored anywhere?',
+    answer: 'No. Everything is generated in your browser and never sent to any server. Once you close or refresh the page, the generated data exists only if you have copied it.',
+  },
+  {
+    question: 'Can I generate multiple items at once?',
+    answer: 'Yes. The UUID generator supports bulk generation. The password generator creates one at a time but you can generate as many as you need by clicking the button repeatedly.',
+  },
+  {
+    question: 'Do generated QR codes expire?',
+    answer: 'No. QR codes generated here are static — they encode data directly into the image. They will work forever as long as the encoded content (like a URL) remains active.',
+  },
+  {
+    question: 'What file formats can I download QR codes in?',
+    answer: 'Currently, QR codes can be downloaded as high-quality PNG images. PNG is suitable for both digital use (websites, emails) and print materials (business cards, flyers).',
+  },
+];
+---
+
+<BaseLayout title="Free Online Generators - Password, UUID & QR Code | FreeQuickUtility" description="Free online generators for passwords, UUIDs, and QR codes. Generate secure random passwords, unique identifiers, and customizable QR codes instantly.">
+  <Fragment slot="head">
+    <SEO
+      title="Free Online Generators - Password, UUID & QR Code | FreeQuickUtility"
+      description="Free online generators for passwords, UUIDs, and QR codes. Generate secure random passwords, unique identifiers, and customizable QR codes instantly. No sign-up required."
+      canonical="/tools/generators"
+    />
+    <FAQSchema faqs={faqs} />
+  </Fragment>
+
+  <div class="mx-auto max-w-5xl px-4 py-12 md:px-6 md:py-20">
+    <Breadcrumb items={breadcrumbs} />
+
+    <div class="mb-10">
+      <h1 class="text-3xl font-semibold tracking-tight text-[var(--color-ink)] md:text-4xl" style="letter-spacing: -1.28px;">
+        Free Online Generators
+      </h1>
+      <p class="mt-3 max-w-2xl text-base leading-relaxed text-[var(--color-body)]">
+        Generate secure passwords, unique UUIDs, and customizable QR codes instantly. All generators use cryptographically strong randomness and run entirely in your browser for maximum privacy and security.
+      </p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {tools.map((tool) => (
+        <ToolCard
+          name={tool.name}
+          description={tool.description}
+          icon={tool.icon}
+          path={tool.path}
+          popular={tool.popular}
+          isNew={tool.isNew}
+        />
+      ))}
+    </div>
+
+    <!-- SEO Content Section -->
+    <section class="mt-16 border-t border-[var(--color-hairline)] pt-10">
+      <h2 class="text-xl font-semibold tracking-tight text-[var(--color-ink)]">About Our Free Generator Tools</h2>
+      <p class="mt-4 text-sm leading-relaxed text-[var(--color-body)]">
+        FreeQuickUtility offers essential generator tools for security and development needs. Our password generator creates strong, random passwords using the Web Crypto API — the same cryptographic standard used by security applications. The UUID generator produces version 4 universally unique identifiers suitable for databases, APIs, and distributed systems. And our QR code generator lets you encode URLs, text, WiFi credentials, and contact information into scannable codes.
+      </p>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--color-body)]">
+        Security is central to our generators. No generated data is ever transmitted to servers or stored anywhere. Everything runs client-side in your browser, giving you complete control over sensitive outputs like passwords and unique identifiers.
+      </p>
+    </section>
+
+    <FAQ faqs={faqs} title="Generator Tools FAQ" />
+  </div>
+</BaseLayout>
