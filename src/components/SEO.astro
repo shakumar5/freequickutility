@@ -9,7 +9,18 @@ export interface Props {
 
 const { title, description, canonical, ogImage = '/images/og-default.png', noindex = false } = Astro.props;
 const siteUrl = 'https://freequickutility.com';
-const fullCanonical = canonical ? `${siteUrl}${canonical}` : Astro.url.href;
+
+// Always use trailing slash to match Astro's static output and avoid duplicate URL issues
+function normalizeCanonical(url: string): string {
+  // Already absolute
+  if (url.startsWith('http')) return url;
+  // Add trailing slash if missing (except for root)
+  if (url !== '/' && !url.endsWith('/')) return `${siteUrl}${url}/`;
+  return `${siteUrl}${url}`;
+}
+
+const rawCanonical = canonical ?? Astro.url.pathname;
+const fullCanonical = normalizeCanonical(rawCanonical);
 const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 ---
 

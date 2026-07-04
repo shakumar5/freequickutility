@@ -17,7 +17,11 @@ const schema = {
     '@type': 'ListItem',
     position: index + 1,
     name: item.label,
-    ...(item.href && { item: `https://freequickutility.com${item.href}` }),
+    ...(item.href && {
+      item: item.href === '/'
+        ? 'https://freequickutility.com/'
+        : `https://freequickutility.com${item.href.endsWith('/') ? item.href : item.href + '/'}`,
+    }),
   })),
 };
 ---

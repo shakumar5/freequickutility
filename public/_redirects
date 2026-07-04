@@ -1,1 +1,13 @@
-# www redirect is handled via Cloudflare DNS settings
+# www → non-www (301 permanent redirect)
+https://www.freequickutility.com/* https://freequickutility.com/:splat 301
+
+# Force trailing slash on all pages (prevents duplicate URL issues)
+/tools/:tool  /tools/:tool/  301
+/blog/:slug   /blog/:slug/   301
+/about        /about/        301
+/contact      /contact/      301
+/blog         /blog/         301
+/search       /search/       301
+/support      /support/      301
+/privacy-policy /privacy-policy/ 301
+/terms        /terms/        301

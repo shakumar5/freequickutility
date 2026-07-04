@@ -6,6 +6,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://freequickutility.com',
+  trailingSlash: 'always',
   compressHTML: true,
   integrations: [sitemap({
     filter: (page) => !page.includes('/search'),

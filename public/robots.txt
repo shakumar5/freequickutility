@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /search
 
-# Sitemaps
 Sitemap: https://freequickutility.com/sitemap-index.xml
